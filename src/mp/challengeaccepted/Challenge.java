@@ -28,20 +28,24 @@ public class Challenge
 		this.status=status;
 	}
 	
-	public boolean allesEingegeben()
+	public int allesEingegeben()
 	{
 		if(title==null)
-		{return false;}
+		{return 1;}
 		if(description==null)
-		{return false;}
+		{return 2;}
 		if(receiver==null)
-		{return false;}
+		{return 3;}
 		if(emitter==null)
-		{return false;}
+		{return 4;}
 		if(proof==null)
-		{return false;}
+		{return 5;}
 		if(status==null)
-		{return false;}
-		return true;
+		{return 6;}
+		if(timestamp==null)
+		{return 7;}
+		if(file==null)
+		{return 8;}
+		return 0;
 	}
 }

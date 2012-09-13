@@ -6,5 +6,8 @@
     <string name="title_activity_start">StartActivity</string>
     <string name="title_activity_challenge_so">Challenge someone</string>
     <string name="title_activity_chose_contact">ChoseContact</string>
+    <string name="title_activity_challenge_info">MainActivity</string>
+    <string name="title_activity_inputnumber">MainActivity</string>
+    <string name="title_activity_dialog_challenge_edit">MainActivity</string>
 
 </resources>
