@@ -10,7 +10,7 @@ public class Challenge
 	private String description;
 	private String proof;
 	private String receiver;
-	private String emitter;
+	private String sender;
 	private boolean channelChallenge;
 	private Status status;
 	private Date timestamp; 
@@ -18,12 +18,12 @@ public class Challenge
 	
 
 	
-	public Challenge(String title, String description, String receiver, String emitter, String proof, Status status)
+	public Challenge(String title, String description, String receiver, String sender, String proof, Status status)
 	{
 		this.title=title;
 		this.description=description;
 		this.receiver=receiver;
-		this.emitter=emitter;
+		this.sender=sender;
 		this.proof=proof;
 		this.status=status;
 	}
@@ -36,7 +36,7 @@ public class Challenge
 		{return 2;}
 		if(receiver==null)
 		{return 3;}
-		if(emitter==null)
+		if(sender==null)
 		{return 4;}
 		if(proof==null)
 		{return 5;}
