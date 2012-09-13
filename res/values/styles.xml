@@ -1,0 +1,8 @@
+<resources>
+
+    <style name="AppTheme" parent="android:Theme.Light" />
+    <color name="Weiss">#EDEDED</color>
+    <color name="Grau">#778899</color>
+    <color name="Blau">#63B8FF</color>
+	<color name="Rot">#CD0000</color>
+</resources>
