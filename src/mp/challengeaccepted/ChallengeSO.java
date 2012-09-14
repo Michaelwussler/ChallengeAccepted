@@ -1,7 +1,9 @@
 package mp.challengeaccepted;
 
+
 import android.os.Bundle;
 import android.app.Activity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.support.v4.app.NavUtils;
@@ -12,6 +14,7 @@ public class ChallengeSO extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_challenge_so);
+        
     }
 
     @Override
@@ -19,6 +22,4 @@ public class ChallengeSO extends Activity {
         getMenuInflater().inflate(R.menu.activity_challenge_so, menu);
         return true;
     }
-
-    
 }

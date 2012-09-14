@@ -6,11 +6,12 @@ import java.util.Date;
 
 public class Challenge 
 {
+	private int id; 
 	private String title;
 	private String description;
 	private String proof;
-	private String receiver;
-	private String emitter;
+	private Profil receiver;
+	private Profil emitter;
 	private boolean channelChallenge;
 	private Status status;
 	private Date timestamp; 
@@ -18,7 +19,7 @@ public class Challenge
 	
 
 	
-	public Challenge(String title, String description, String receiver, String emitter, String proof, Status status)
+	public Challenge(String title, String description, Profil receiver, Profil emitter, String proof, Status status)
 	{
 		this.title=title;
 		this.description=description;
