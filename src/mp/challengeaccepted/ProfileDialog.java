@@ -30,10 +30,10 @@ public class ProfileDialog extends Dialog {
 				{
 					if(yourmail.getText().toString().length()!=0)
 					{
-						App.setUserName(yourname.getText().toString());
-						App.setUserPhoneNumber(yournumber.getText().toString());
-						App.setUserEmail(yourmail.getText().toString());
-						App.verifyUser();
+						App.getUser().setUserName(yourname.getText().toString());
+						App.getUser().setUserPhoneNumber(yournumber.getText().toString());
+						App.getUser().setUserEmail(yourmail.getText().toString());
+						App.getUser().verifyUser();
 						super.onBackPressed();
 					}
 					else

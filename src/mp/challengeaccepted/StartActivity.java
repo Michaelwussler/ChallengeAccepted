@@ -38,8 +38,10 @@ public class StartActivity extends Activity
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        App.ladeUserProfile();
-        if(App.getUser().isVerified()==false)
+        
+        ((App) getApplication()).getMyDB().ladeUserProfile();       
+        
+        if(((App) getApplication()).getUser().isVerified()==false)
         {	
         	showDialog(1);
         }   
@@ -84,7 +86,7 @@ public class StartActivity extends Activity
   	   dialog.setYourname((EditText)dialog.findViewById(R.id.editTextName));
  		dialog.setYournumber((EditText)dialog.findViewById(R.id.editTextNumber));
  	    dialog.setYourmail((EditText)dialog.findViewById(R.id.editTextEmail));
-   	   String temp=((TelephonyManager) getSystemService(TELEPHONY_SERVICE)).getLine1Number();
+   	   String temp=((TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE)).getLine1Number();
        if(temp!=null)
        {
     	   if(temp.length()!=0)
@@ -105,7 +107,7 @@ public class StartActivity extends Activity
 		super.onBackPressed();
 	}
     
-    
+   
     
     
 }

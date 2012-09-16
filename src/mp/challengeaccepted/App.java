@@ -1,67 +1,67 @@
 package mp.challengeaccepted;
 
 import android.app.Application;
+import android.telephony.TelephonyManager;
 
 public class App extends Application 
 {
-	private static Profile user;
+	private static User user;
+	private static String sim;
 	private DatabaseOnBoard myDB=null;
 	
 	@Override
 	public void onCreate() 
 	{
-		ladeUserProfile();
-		//USER UPDATE
+		setUser(getMyDB().ladeUserProfile());
+		//CONTACT UPDATE
 		//CHALLENGE UPDATE
 		super.onCreate();
 	}
 
+	/**
+	 * @return the myDB
+	 */
+	public DatabaseOnBoard getMyDB() {
+		return myDB;
+	}
 
+	/**
+	 * @param myDB the myDB to set
+	 */
+	public void setMyDB(DatabaseOnBoard myDB) {
+		this.myDB = myDB;
+	}
 
 	/**
 	 * @return the user
 	 */
-	public static Profile getUser() {
+	public static User getUser() {
 		return user;
 	}
 
 	/**
 	 * @param user the user to set
 	 */
-	public static void setUser(Profile user) {
+	public static void setUser(User user) {
 		App.user = user;
 	}
-
-	public static void setUserName(String string) {
-		// TODO Auto-generated method stub
-		user.setName(string);
-	}
-
-	public static void setUserPhoneNumber(String string) {
-		// TODO Auto-generated method stub
-		user.setPhoneNumber(string);
-	}
-
-	public static void setUserEmail(String string) {
-		// TODO Auto-generated method stub
-		user.setEmail(string);
-	}
 	
+	public boolean checkUser()
+	{
+		String aktuelleSim=((TelephonyManager)getSystemService(TELEPHONY_SERVICE)).getSimSerialNumber();
+		
+		if((aktuelleSim.equals(user.getSim()))&&(user.isVerified()==true))
+			return true;
+		else return false;
+	}
+
 	
-	public static void ladeUserProfile() {
-		if(user==null)
-		{user=new Profile();} //NUR VORÜBERGEHEND
+	public void ContactUpdate()
+	{
 		
 	}
-	
-	
 
-	public static void verifyUser() {
-		// Hier die FUnktion um den User zu vertifizieren
-		user.setVerified(true);
-		
-	}
-	
+
 }
 
 

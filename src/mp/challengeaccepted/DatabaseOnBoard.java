@@ -29,7 +29,9 @@ public class DatabaseOnBoard
 	static final String CONTACT_NAME="name";
 	static final String CONTACT_NUMBER="number";
 	static final String CONTACT_MAIL="mail";
+	static final String CONTACT_SIM="sim";
 	static final String CONTACT_VERIFIED="verified";
+	
 	
 	
 	///////////////////////////////////////////////////7
@@ -56,7 +58,7 @@ public class DatabaseOnBoard
 			{ 
 				String sql ="create table if not exists " + USER_TABLE + " ("+ USER_NAME + " string, " + USER_NUMBER + " string, " + USER_MAIL + " string, " + USER_VERIFIED + " boolean)";
 				myDB.execSQL(sql);
-				sql ="create table if not exists " + CONTACT_TABLE + " ("+ CONTACT_NAME + " string, " + CONTACT_NUMBER + " string, " + CONTACT_MAIL + " string, " + CONTACT_VERIFIED + " boolean)";
+				sql ="create table if not exists " + CONTACT_TABLE + " ("+ CONTACT_NAME + " string, " + CONTACT_NUMBER + " string, " + CONTACT_MAIL + " string, " + CONTACT_SIM + " string, " + CONTACT_VERIFIED + " boolean)";
 				myDB.execSQL(sql);
 				sql ="create table if not exists " + CHALLENGES_TABLE + " ("+ C_ID + " integer, " + C_SENDER + " string, " + C_RECEIVER + " string, " + C_TITLE + " string"+ C_DESCRIPTION + " string"+ C_PROOF + " string"+ C_STATUS + " integer"+ C_TIMESTAMP + " string)";
 				myDB.execSQL(sql);
@@ -70,6 +72,12 @@ public class DatabaseOnBoard
 	         myDB.close();
 	    }
 		
+	}
+
+
+	public User ladeUserProfile() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	
