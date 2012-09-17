@@ -24,12 +24,11 @@ if (isset($_POST['tag']) && $_POST['tag'] != '') {
     	//tag der aufrufenden userfunction ist "anmelden"
         //Übergabe der Parameter aus dem json Objekt
 
-        $vorname = $_POST['vorname'];
-        $nachname = $_POST['nachname'];
+        $name = $_POST['name'];
         $email = $_POST['email'];
         $telefonnummer = $_POST['telefonnummer'];
     
-        $anmelden = $db->anmelden($vorname, $nachname, $email, $telefonnummer);
+        $anmelden = $db->anmelden($name, $email, $telefonnummer);
             if ($anmelden != false) {
               $response["success"] = 1;
               $response["error_msg"] = "Benutzer geladen";
@@ -39,10 +38,63 @@ if (isset($_POST['tag']) && $_POST['tag'] != '') {
               $response["error_msg"] = "Fehler beim Anmelden des Benutzers";
             echo json_encode($response);
             }
-    }else {
-        echo "Ungültige Anfrage";
+    }elseif ($tag == 'isuser') {
+        //tag der aufrufenden userfunction ist "isuser"
+        //Übergabe der Parameter aus dem json Objekt
+
+        $telefonnummer = $_POST['telefonnummer'];
+    
+        $isuser = $db->isUser($telefonnummer);
+            if ($isuser != false) {
+              $response["success"] = 1;
+              $response["error_msg"] = "Ueberpruefung erfolgreich"; 
+              echo json_encode($response);
+            } else {
+              $response["error"] = 1;
+              $response["error_msg"] = "Fehler beim ueberpruefen des Nutzers";
+            echo json_encode($response);
+            }
+   }elseif ($tag == 'removeuser') {
+        //tag der aufrufenden userfunction ist "removeuser"
+        //Übergabe der Parameter aus dem json Objekt
+
+        $email_telefonnummer = $_POST['email_telefonnummer'];
+    
+        $isuser = $db->removeUser($email_telefonnummer);
+            if ($isuser != false) {
+              $response["success"] = 1;
+              $response["error_msg"] = "loeschen des Profils erfolgreich"; 
+              echo json_encode($response);
+            } else {
+              $response["error"] = 1;
+              $response["error_msg"] = "Fehler beim loeschen des Profils";
+            echo json_encode($response);
+            }
+
+   }elseif ($tag == 'profilsync') {
+
+        $anzahlProfile = intval($_POST['anzahlProfile']);
+
+          for($count =0; $count < $anzahlProfile; $count++) {
+          $argtelefonummer = $_POST['profil' . (string)$count]; 
+          $profilsync = $db->profilSync($argtelefonnummer);
+            
+            if ($profilsync != false) {
+              $response["success"] = 1;
+              $response["error_msg"] = "profile erfolgreich uebermittelt.";
+              echo json_encode($response);
+            } else {
+              $response["error"] = 1;
+              $response["error_msg"] = "Fehler beim syncen der Profile";
+              echo json_encode($response);
+            }
+          }
+        
+   }else {
+        echo "Ungueltige Anfrage";
     }
-} else {
+
+ }else {
     echo "Zugriff verweigert";
 }
 ?>

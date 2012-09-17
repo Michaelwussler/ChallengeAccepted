@@ -5,12 +5,22 @@ package mp.challengeaccepted;
 public class Profile 
 {
 	private String name;
-	private String phoneNumber;
-	private int id;
+	private String phoneNumber = "";
+	private int id = -1;  // soll bei der Registrierung von dem Server zurückgegebne werden (MUSS NOCH GEMACHT WERDEN!)
 	private String email;
 	private boolean verified=false;
+	private boolean registered =false; // gibt an, ob das Profil auf dem Server existiert
+
 
 	
+	
+	public Profile(String telefonnummer) {
+		this.phoneNumber = telefonnummer;
+	}
+	
+	public Profile() {
+		// TODO Auto-generated constructor stub
+	}
 	/**
 	 * @return the name
 	 */
@@ -70,6 +80,14 @@ public class Profile
 	 */
 	public void setVerified(boolean verified) {
 		this.verified = verified;
+	}
+	
+	
+	public boolean isRegistered() {
+		return registered;
+	}
+	public void setRegistered(boolean registered) {
+		this.registered = registered;
 	}
 
 }

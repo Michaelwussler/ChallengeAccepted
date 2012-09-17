@@ -3,13 +3,12 @@ package mp.challengeaccepted;
 
 import android.os.Bundle;
 import android.app.Activity;
-<<<<<<< HEAD
-=======
+
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnDismissListener;
 import android.text.InputFilter;
->>>>>>> 672aad7ddac1f38bd6f084f92354051b6ee9eff4
+
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -34,8 +33,7 @@ public class ChallengeSO extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_challenge_so);
-<<<<<<< HEAD
-=======
+
         LLTitle=(LinearLayout)findViewById(R.id.LLTitle);
         LLTitle.setOnClickListener(new OnClickListener() {
 			
@@ -65,7 +63,7 @@ public class ChallengeSO extends Activity {
         buttonSend.setOnClickListener(new OnClickListener() {
 			
 			public void onClick(View arg0) {
-				Challenge temp=new Challenge(getChallengeTitle(), getDescription(), getReceiver(), getEmitter(), getProof(), getChallengeStatus());
+				Challenge temp=new Challenge(getChallengeTitle(), getDescription(), getReceiver(), getSender(), getProof(), getChallengeStatus());
 				// DIE CHALLENGE VERSENDEN
 				// DIE CHALLENGE ABSPEICHERN
 				
@@ -82,12 +80,12 @@ public class ChallengeSO extends Activity {
 				return null;
 			}
 
-			private String getEmitter() {
+			private Profile getSender() {
 				// TODO Auto-generated method stub
 				return null;
 			}
 
-			private String getReceiver() {
+			private Profile getReceiver() {
 				// TODO Auto-generated method stub
 				return null;
 			}
@@ -103,8 +101,6 @@ public class ChallengeSO extends Activity {
 			}
 		});
         
-    
->>>>>>> 672aad7ddac1f38bd6f084f92354051b6ee9eff4
         
     }
 
@@ -113,8 +109,7 @@ public class ChallengeSO extends Activity {
         getMenuInflater().inflate(R.menu.activity_challenge_so, menu);
         return true;
     }
-<<<<<<< HEAD
-=======
+
 
 	@Override
 	protected Dialog onCreateDialog(int id) {
@@ -145,7 +140,7 @@ public class ChallengeSO extends Activity {
 			final EditText eingabe=(EditText)dialog.findViewById(R.id.editTextEingabe);
 
 			dialog.setTitle("Edit description");
-			dialog.setOnDismissListener(new OnDismissListener() {
+			dialog.setOnDismissListener(new OnDismissListener(){
 				
 				public void onDismiss(DialogInterface dialog) 
 				{
@@ -170,10 +165,5 @@ public class ChallengeSO extends Activity {
 		}
 		return dialog;
 	}
-    
-    
-    
 
-    
->>>>>>> 672aad7ddac1f38bd6f084f92354051b6ee9eff4
 }

@@ -1,15 +1,13 @@
 package mp.challengeaccepted;
 
 
-<<<<<<< HEAD
-import org.json.JSONException;
-import org.json.JSONObject;
 
-import mp.challengeaccepted.db.DBFunctions;
-=======
->>>>>>> 672aad7ddac1f38bd6f084f92354051b6ee9eff4
+
+import java.util.ArrayList;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -17,6 +15,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnDismissListener;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -36,8 +36,18 @@ import android.telephony.TelephonyManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+import mp.challengeaccepted.db.DBFunctions;
+import mp.challengeaccepted.db.ServerDB;
+import mp.challengeaccepted.ChildThread;
+
+
 public class StartActivity extends Activity 
 {
+	private static final String TAG = "ThreadMessaging";
+	private Handler mMainHandler;
+    
 	Button buttonChallengeSo;
 	Button buttonMyChallenges;
 	Button buttonChannels;
@@ -45,41 +55,39 @@ public class StartActivity extends Activity
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-<<<<<<< HEAD
-       
-        String temp=getMyPhoneNumber();
-        Log.d("Challenge","accepted");
-        if(temp==null) 
-        {Log.d("Telefonnumer","Kann nicht gelesen werden");}
-        else{ Log.d("Telefonnummer",temp);}
-                
-        setContentView(R.layout.activity_challenge_so); 
         
-	     //TEST     
-	      String KEY_SUCCESS = "success";
-		  String KEY_ERROR = "error";
-		    
-	      DBFunctions databasefunctions = new DBFunctions();
-	      JSONObject json = databasefunctions.anmelden("Peter", "Raiser", "PRaiser", "015771356010");
-	      
-	      try {
-	            String res = json.getString(KEY_SUCCESS);
-	            if(Integer.parseInt(res) == 1){
-	           	 Log.d("Profil speichern", KEY_SUCCESS);
-	            }else{
-	           	 Log.d("Profil nicht gespeichert", KEY_ERROR);
-	            }
-	
-	    	} catch (JSONException e) {
-	    		e.printStackTrace();
-	    	}
-	    
-	      //ENDE TEST
-=======
+        
+        
+        
         App.ladeUserProfile();
         if(App.getUser().isVerified()==false)
         {	
-        	showDialog(1);
+        	
+        	ArrayList<Profile> testlist = new ArrayList<Profile>();
+        	testlist.add(new Profile("01"));
+        	testlist.add(new Profile("02"));
+        	testlist.add(new Profile("04"));
+        	testlist.add(new Profile("1231"));
+       
+        	
+        	ServerDB.profilSync(testlist);
+
+        		Log.d("ServerDB test", "User TEL wird ausgelesen"+ testlist.get(0).getPhoneNumber());    		
+        		Log.d("ServerDB test", "User ID wird ausgelesen"+ testlist.get(0).getId());    		
+
+        		Log.d("ServerDB test", "User TEL wird ausgelesen"+ testlist.get(1).getPhoneNumber());    		
+        		Log.d("ServerDB test", "User ID wird ausgelesen"+ testlist.get(1).getId()); 
+        		
+        		Log.d("ServerDB test", "User TEL wird ausgelesen"+ testlist.get(2).getPhoneNumber());    		
+        		Log.d("ServerDB test", "User ID wird ausgelesen"+ testlist.get(2).getId()); 
+        		
+        		Log.d("ServerDB test", "User TEL wird ausgelesen"+ testlist.get(3).getPhoneNumber());    		
+        		Log.d("ServerDB test", "User ID wird ausgelesen"+ testlist.get(3).getId()); 
+			     	
+    		App.getUser().setVerified(true);
+    		
+    		
+   
         }   
         setContentView(R.layout.activity_start); 
         buttonChallengeSo=(Button) findViewById(R.id.buttonChallengeSO);
@@ -93,12 +101,12 @@ public class StartActivity extends Activity
         buttonMyChallenges.setOnClickListener(new OnClickListener() {
 			
 			public void onClick(View v) {
-				//showDialog(1);
+				showDialog(1);
 				
 			}
 		});
         buttonChannels=(Button) findViewById(R.id.buttonChannels);
->>>>>>> 672aad7ddac1f38bd6f084f92354051b6ee9eff4
+
     } 
 
     @Override
@@ -106,10 +114,6 @@ public class StartActivity extends Activity
         getMenuInflater().inflate(R.menu.activity_start, menu);
         return true;
     }
-
-    
- 
-
     
     
   //@Override
@@ -135,7 +139,19 @@ public class StartActivity extends Activity
     	
 
     }
-    
+    //ZU Test2
+//    @Override
+//    protected void onDestroy() {
+//
+//        Log.i(TAG, "Stop looping the child thread's message queue");
+//
+//        /*
+//         * Remember to stop the looper
+//         */
+//        ChildThread.mChildHandler.getLooper().quit();
+//
+//        super.onDestroy();
+//    }
    
 
 	@Override

@@ -10,25 +10,16 @@ public class Challenge
 	private String title;
 	private String description;
 	private String proof;
-<<<<<<< HEAD
-	private Profil receiver;
-	private Profil emitter;
-=======
-	private String receiver;
-	private String sender;
->>>>>>> 672aad7ddac1f38bd6f084f92354051b6ee9eff4
+	private Profile receiver;
+	private Profile sender;
 	private boolean channelChallenge;
 	private Status status;
 	private Date timestamp; 
 	private File file;
 	
 
-	
-<<<<<<< HEAD
-	public Challenge(String title, String description, Profil receiver, Profil emitter, String proof, Status status)
-=======
-	public Challenge(String title, String description, String receiver, String sender, String proof, Status status)
->>>>>>> 672aad7ddac1f38bd6f084f92354051b6ee9eff4
+	public Challenge(String title, String description, Profile receiver, Profile sender, String proof, Status status)
+
 	{
 		this.title=title;
 		this.description=description;

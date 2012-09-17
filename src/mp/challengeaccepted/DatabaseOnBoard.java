@@ -22,6 +22,7 @@ public class DatabaseOnBoard
 	static final String USER_MAIL="mail";
 	static final String USER_NUMBER="number";
 	static final String USER_VERIFIED="verfied";
+	static final String USER_SIM="sim";
 	
 ////////////////////////////////////////////////////	
 	static final String CONTACT_TABLE="contacts";
@@ -29,7 +30,9 @@ public class DatabaseOnBoard
 	static final String CONTACT_NAME="name";
 	static final String CONTACT_NUMBER="number";
 	static final String CONTACT_MAIL="mail";
+	static final String CONTACT_SIM="sim";
 	static final String CONTACT_VERIFIED="verified";
+	
 	
 	
 	///////////////////////////////////////////////////7
@@ -46,6 +49,10 @@ public class DatabaseOnBoard
 	
 	Context context;
 
+	public DatabaseOnBoard()
+	{
+		//onCreateDBAndDBTabled();
+	}
 
 	private void onCreateDBAndDBTabled()
 	{
@@ -56,20 +63,33 @@ public class DatabaseOnBoard
 			{ 
 				String sql ="create table if not exists " + USER_TABLE + " ("+ USER_NAME + " string, " + USER_NUMBER + " string, " + USER_MAIL + " string, " + USER_VERIFIED + " boolean)";
 				myDB.execSQL(sql);
-				sql ="create table if not exists " + CONTACT_TABLE + " ("+ CONTACT_NAME + " string, " + CONTACT_NUMBER + " string, " + CONTACT_MAIL + " string, " + CONTACT_VERIFIED + " boolean)";
+				sql ="create table if not exists " + CONTACT_TABLE + " ("+ CONTACT_NAME + " string, " + CONTACT_NUMBER + " string, " + CONTACT_MAIL + " string, " + CONTACT_SIM + " string, " + CONTACT_VERIFIED + " boolean)";
 				myDB.execSQL(sql);
 				sql ="create table if not exists " + CHALLENGES_TABLE + " ("+ C_ID + " integer, " + C_SENDER + " string, " + C_RECEIVER + " string, " + C_TITLE + " string"+ C_DESCRIPTION + " string"+ C_PROOF + " string"+ C_STATUS + " integer"+ C_TIMESTAMP + " string)";
 				myDB.execSQL(sql);
 				
 			}
-			Log.d("Database","created"); 
+			Log.d("Database","created");  
 	    } 
 		finally 
 		{
 	         if (myDB != null);
-	         myDB.close();
+	         //myDB.close();
 	    }
 		
+	}
+
+
+	public User ladeUserProfile() {
+		String tempname;				
+	    Cursor c = myDB.query(USER_TABLE, null,null, null, null, null, null);
+	    
+		
+		Log.d("Name",c.getString(0));
+		Log.d("Nummer",c.getString(1));
+		Log.d("EMail",c.getString(2));
+		Log.d("Verifiziert",c.getString(3));
+		return null;
 	}
 	
 	
@@ -93,23 +113,21 @@ public class DatabaseOnBoard
 				}
 			}
 		}
+	*/
 	
-	
-	public static void speichern(Messpunkt messpunkt)
+	public void speichern(User user)
 	{
-		
+				myDB = SQLiteDatabase.openOrCreateDatabase(DB_NAME, null);
+
 				ContentValues contentValues=new ContentValues(); 
-				contentValues.put(C_LATITUDE, messpunkt.location.getLatitude());
-				contentValues.put(C_LONGITUDE, messpunkt.location.getLongitude());
-				contentValues.put(C_HORIZONTAL, messpunkt.getMagneticHorizontal());
-				contentValues.put(C_VERTICAL, messpunkt.getMagneticVertical());
-				contentValues.put(C_ERRORHORIZONTAL, messpunkt.getFehlerHorizontal());
-				contentValues.put(C_ERRORVERTICAL, messpunkt.getFehlerVertical());
-				contentValues.put(C_ANZAHL,messpunkt.getAnzahl());
-				contentValues.put(C_GENAUIGKEIT,messpunkt.location.getAccuracy());
-				myDB.insert(TABLE, null, contentValues);
+				contentValues.put(USER_NAME, user.getName());
+				contentValues.put(USER_NUMBER, user.getPhoneNumber());
+				contentValues.put(USER_MAIL, user.getEmail());
+				contentValues.put(USER_VERIFIED, user.isVerified());
+				contentValues.put(USER_SIM, user.getSim());
+				myDB.insert(USER_TABLE, null, contentValues);
 	}
 			
 }
-*/
-}
+
+
