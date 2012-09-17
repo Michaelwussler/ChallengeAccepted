@@ -22,6 +22,7 @@ public class DatabaseOnBoard
 	static final String USER_MAIL="mail";
 	static final String USER_NUMBER="number";
 	static final String USER_VERIFIED="verfied";
+	static final String USER_SIM="sim";
 	
 ////////////////////////////////////////////////////	
 	static final String CONTACT_TABLE="contacts";
@@ -43,18 +44,25 @@ public class DatabaseOnBoard
 	static final String C_RECEIVER ="receiver";
 	static final String C_TITLE ="shortDescription";
 	static final String C_DESCRIPTION ="longDescription";
-	static final String C_PROOF ="proof";
+	static final String C_PROOF ="proof"; 
 	static final String C_STATUS="status";
 	
 	Context context;
 
+	public DatabaseOnBoard()
+	{
+	//	onCreateDBAndDBTabled();
+	}
 
 	private void onCreateDBAndDBTabled()
 	{
 		
 		try {
 			myDB = SQLiteDatabase.openOrCreateDatabase(DB_NAME, null);
-			//myDB.delete(TABLE, null, null); 
+			myDB.delete(USER_TABLE, null, null); 
+			myDB.delete(CONTACT_TABLE, null, null); 
+			myDB.delete(CHALLENGES_TABLE, null, null); 
+
 			{ 
 				String sql ="create table if not exists " + USER_TABLE + " ("+ USER_NAME + " string, " + USER_NUMBER + " string, " + USER_MAIL + " string, " + USER_VERIFIED + " boolean)";
 				myDB.execSQL(sql);
@@ -64,19 +72,28 @@ public class DatabaseOnBoard
 				myDB.execSQL(sql);
 				
 			}
-			Log.d("Database","created"); 
+			Log.d("Database","created");  
 	    } 
 		finally 
 		{
 	         if (myDB != null);
-	         myDB.close();
+	         //myDB.close();
 	    }
 		
 	}
 
 
 	public User ladeUserProfile() {
-		// TODO Auto-generated method stub
+		String tempname;				
+		myDB = SQLiteDatabase.openOrCreateDatabase(DB_NAME, null);
+
+		Cursor c = myDB.query(USER_TABLE, null,null, null, null, null, null);
+	    
+		
+		Log.d("Name",c.getString(0));
+		Log.d("Nummer",c.getString(1));
+		Log.d("EMail",c.getString(2));
+		Log.d("Verifiziert",c.getString(3));
 		return null;
 	}
 	
@@ -101,23 +118,21 @@ public class DatabaseOnBoard
 				}
 			}
 		}
+	*/
 	
-	
-	public static void speichern(Messpunkt messpunkt)
+	public void speichern(User user)
 	{
-		
+				//myDB = SQLiteDatabase.openOrCreateDatabase(DB_NAME, null);
+
 				ContentValues contentValues=new ContentValues(); 
-				contentValues.put(C_LATITUDE, messpunkt.location.getLatitude());
-				contentValues.put(C_LONGITUDE, messpunkt.location.getLongitude());
-				contentValues.put(C_HORIZONTAL, messpunkt.getMagneticHorizontal());
-				contentValues.put(C_VERTICAL, messpunkt.getMagneticVertical());
-				contentValues.put(C_ERRORHORIZONTAL, messpunkt.getFehlerHorizontal());
-				contentValues.put(C_ERRORVERTICAL, messpunkt.getFehlerVertical());
-				contentValues.put(C_ANZAHL,messpunkt.getAnzahl());
-				contentValues.put(C_GENAUIGKEIT,messpunkt.location.getAccuracy());
-				myDB.insert(TABLE, null, contentValues);
+				contentValues.put(USER_NAME, user.getName());
+				contentValues.put(USER_NUMBER, user.getPhoneNumber());
+				contentValues.put(USER_MAIL, user.getEmail());
+				contentValues.put(USER_VERIFIED, user.isVerified());
+				contentValues.put(USER_SIM, user.getSim());
+				myDB.insert(USER_TABLE, null, contentValues);
 	}
 			
 }
-*/
-}
+
+

@@ -38,8 +38,7 @@ public class StartActivity extends Activity
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
-        ((App) getApplication()).getMyDB().ladeUserProfile();       
+        Log.d("Start","OnCreate");
         
         if(((App) getApplication()).getUser().isVerified()==false)
         {	
@@ -57,7 +56,7 @@ public class StartActivity extends Activity
         buttonMyChallenges.setOnClickListener(new OnClickListener() {
 			
 			public void onClick(View v) {
-				//showDialog(1);
+				
 				
 			}
 		});
@@ -74,28 +73,29 @@ public class StartActivity extends Activity
  
 
     
-    
+     
   //@Override
     protected Dialog onCreateDialog(int id) 
     {
-    	
+   	   Log.d("YourNameCREATE DIALOG","created");
         ProfileDialog dialog = new ProfileDialog(this);
   	   dialog.setContentView(R.layout.activity_profilesetting);
   	   dialog.setTitle("Profile settings"); 
+  	   dialog.setYourname(((EditText)dialog.findViewById(R.id.editTextName)));
+  	   Log.d("YourName",String.valueOf(dialog.getYourname()));
+  	   dialog.setYournumber(((EditText)dialog.findViewById(R.id.editTextNumber)));
+  	dialog.setYourmail(((EditText)dialog.findViewById(R.id.editTextEmail)));
 
-  	   dialog.setYourname((EditText)dialog.findViewById(R.id.editTextName));
- 		dialog.setYournumber((EditText)dialog.findViewById(R.id.editTextNumber));
- 	    dialog.setYourmail((EditText)dialog.findViewById(R.id.editTextEmail));
-   	   String temp=((TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE)).getLine1Number();
+  	   String temp=((TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE)).getLine1Number();
        if(temp!=null)
        {
     	   if(temp.length()!=0)
     	   {
-    		   dialog.getYournumber().setText(temp);
+    		   ((EditText)dialog.findViewById(R.id.editTextNumber)).setText(temp);
     	   }
        }
        return dialog;
-    	
+    	 
 
     }
     

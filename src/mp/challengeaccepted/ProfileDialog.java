@@ -8,6 +8,39 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class ProfileDialog extends Dialog {
+	private EditText yourname;
+	private EditText yournumber;
+	private EditText yourmail;
+
+
+		public EditText getYourname() {
+		return yourname;
+	}
+
+
+	public void setYourname(EditText yourname) {
+		this.yourname = yourname;
+	}
+
+
+	public EditText getYournumber() {
+		return yournumber;
+	}
+
+
+	public void setYournumber(EditText yournumber) {
+		this.yournumber = yournumber;
+	}
+
+
+	public EditText getYourmail() {
+		return yourmail;
+	}
+
+
+	public void setYourmail(EditText yourmail) {
+		this.yourmail = yourmail;
+	}
 
 
 		public ProfileDialog(Context context) {
@@ -15,12 +48,7 @@ public class ProfileDialog extends Dialog {
 		super(context);
 	}
 
-		private EditText yourname;
-		private EditText yournumber;
-		private EditText yourmail;
 
-	
-		
 		public void onBackPressed()
 		{
 			Log.d("Back","pressed");
@@ -30,10 +58,12 @@ public class ProfileDialog extends Dialog {
 				{
 					if(yourmail.getText().toString().length()!=0)
 					{
+						Log.d("onBackPressed","inSchleife");
 						App.getUser().setUserName(yourname.getText().toString());
 						App.getUser().setUserPhoneNumber(yournumber.getText().toString());
 						App.getUser().setUserEmail(yourmail.getText().toString());
 						App.getUser().verifyUser();
+						App.checkUser();
 						super.onBackPressed();
 					}
 					else
@@ -54,45 +84,8 @@ public class ProfileDialog extends Dialog {
 			}
 			
 		}
-
-
-
-		public EditText getYourname() {
-			return yourname;
-		}
-
-
-
-		public void setYourname(EditText yourname) {
-			this.yourname = yourname;
-		}
-
-
-
-		public EditText getYournumber() {
-			return yournumber;
-		}
-
-
-
-		public void setYournumber(EditText yournumber) {
-			this.yournumber = yournumber;
-		}
-
-
-
-		public EditText getYourmail() {
-			return yourmail;
-		}
-
-
-
-		public void setYourmail(EditText yourmail) {
-			this.yourmail = yourmail;
-		}
-		
 	
+		
+		
 
-	   
-	   
 }
