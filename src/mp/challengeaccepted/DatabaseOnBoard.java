@@ -44,14 +44,18 @@ public class DatabaseOnBoard
 	static final String C_RECEIVER ="receiver";
 	static final String C_TITLE ="shortDescription";
 	static final String C_DESCRIPTION ="longDescription";
-	static final String C_PROOF ="proof";
+	static final String C_PROOF ="proof"; 
 	static final String C_STATUS="status";
 	
 	Context context;
 
 	public DatabaseOnBoard()
 	{
+<<<<<<< HEAD
 		//onCreateDBAndDBTabled();
+=======
+	//	onCreateDBAndDBTabled();
+>>>>>>> origin/Michael
 	}
 
 	private void onCreateDBAndDBTabled()
@@ -59,7 +63,10 @@ public class DatabaseOnBoard
 		
 		try {
 			myDB = SQLiteDatabase.openOrCreateDatabase(DB_NAME, null);
-			//myDB.delete(TABLE, null, null); 
+			myDB.delete(USER_TABLE, null, null); 
+			myDB.delete(CONTACT_TABLE, null, null); 
+			myDB.delete(CHALLENGES_TABLE, null, null); 
+
 			{ 
 				String sql ="create table if not exists " + USER_TABLE + " ("+ USER_NAME + " string, " + USER_NUMBER + " string, " + USER_MAIL + " string, " + USER_VERIFIED + " boolean)";
 				myDB.execSQL(sql);
@@ -82,7 +89,13 @@ public class DatabaseOnBoard
 
 	public User ladeUserProfile() {
 		String tempname;				
+<<<<<<< HEAD
 	    Cursor c = myDB.query(USER_TABLE, null,null, null, null, null, null);
+=======
+		myDB = SQLiteDatabase.openOrCreateDatabase(DB_NAME, null);
+
+		Cursor c = myDB.query(USER_TABLE, null,null, null, null, null, null);
+>>>>>>> origin/Michael
 	    
 		
 		Log.d("Name",c.getString(0));
@@ -117,7 +130,11 @@ public class DatabaseOnBoard
 	
 	public void speichern(User user)
 	{
+<<<<<<< HEAD
 				myDB = SQLiteDatabase.openOrCreateDatabase(DB_NAME, null);
+=======
+				//myDB = SQLiteDatabase.openOrCreateDatabase(DB_NAME, null);
+>>>>>>> origin/Michael
 
 				ContentValues contentValues=new ContentValues(); 
 				contentValues.put(USER_NAME, user.getName());
