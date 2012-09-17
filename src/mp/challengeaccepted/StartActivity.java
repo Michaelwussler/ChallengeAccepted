@@ -55,18 +55,11 @@ public class StartActivity extends Activity
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-<<<<<<< HEAD
-        
-        
-        
-        
-        App.ladeUserProfile();
-        if(App.getUser().isVerified()==false)
-=======
+
         Log.d("Start","OnCreate");
         
         if(((App) getApplication()).getUser().isVerified()==false)
->>>>>>> origin/Michael
+
         {	
         	
         	ArrayList<Profile> testlist = new ArrayList<Profile>();
@@ -107,12 +100,7 @@ public class StartActivity extends Activity
         buttonMyChallenges.setOnClickListener(new OnClickListener() {
 			
 			public void onClick(View v) {
-<<<<<<< HEAD
-				showDialog(1);
-=======
-				
->>>>>>> origin/Michael
-				
+
 			}
 		});
         buttonChannels=(Button) findViewById(R.id.buttonChannels);

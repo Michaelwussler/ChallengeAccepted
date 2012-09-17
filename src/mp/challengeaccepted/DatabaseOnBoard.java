@@ -51,11 +51,7 @@ public class DatabaseOnBoard
 
 	public DatabaseOnBoard()
 	{
-<<<<<<< HEAD
-		//onCreateDBAndDBTabled();
-=======
-	//	onCreateDBAndDBTabled();
->>>>>>> origin/Michael
+		
 	}
 
 	private void onCreateDBAndDBTabled()
@@ -89,13 +85,11 @@ public class DatabaseOnBoard
 
 	public User ladeUserProfile() {
 		String tempname;				
-<<<<<<< HEAD
-	    Cursor c = myDB.query(USER_TABLE, null,null, null, null, null, null);
-=======
+
 		myDB = SQLiteDatabase.openOrCreateDatabase(DB_NAME, null);
 
 		Cursor c = myDB.query(USER_TABLE, null,null, null, null, null, null);
->>>>>>> origin/Michael
+
 	    
 		
 		Log.d("Name",c.getString(0));
@@ -130,11 +124,9 @@ public class DatabaseOnBoard
 	
 	public void speichern(User user)
 	{
-<<<<<<< HEAD
+
 				myDB = SQLiteDatabase.openOrCreateDatabase(DB_NAME, null);
-=======
-				//myDB = SQLiteDatabase.openOrCreateDatabase(DB_NAME, null);
->>>>>>> origin/Michael
+
 
 				ContentValues contentValues=new ContentValues(); 
 				contentValues.put(USER_NAME, user.getName());
