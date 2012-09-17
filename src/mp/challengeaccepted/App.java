@@ -2,19 +2,21 @@ package mp.challengeaccepted;
 
 import android.app.Application;
 import android.telephony.TelephonyManager;
+import android.util.Log;
 
 public class App extends Application 
 {
-	private static User user;
+	private static User user=new User();
 	private static String sim;
-	private DatabaseOnBoard myDB=null;
+	private static DatabaseOnBoard myDB=new DatabaseOnBoard();
 	
 	@Override
 	public void onCreate() 
 	{
-		setUser(getMyDB().ladeUserProfile());
+		Log.d("App","OnCreate");
+		//setUser(getMyDB().ladeUserProfile());
 		//CONTACT UPDATE
-		//CHALLENGE UPDATE
+		//CHALLENGE SYNCRONISATION
 		super.onCreate();
 	}
 
@@ -46,13 +48,20 @@ public class App extends Application
 		App.user = user;
 	}
 	
-	public boolean checkUser()
+	public static boolean checkUser()
 	{
-		String aktuelleSim=((TelephonyManager)getSystemService(TELEPHONY_SERVICE)).getSimSerialNumber();
-		
-		if((aktuelleSim.equals(user.getSim()))&&(user.isVerified()==true))
+	//	String aktuelleSim=((TelephonyManager)getSystemService(TELEPHONY_SERVICE)).getSimSerialNumber();
+		Log.d("CheckUser",String.valueOf(getUser().getName()));
+	//	myDB.speichern(getUser());
+	//	myDB.ladeUserProfile();	
+	//	if((aktuelleSim.equals(user.getSim()))&&(user.isVerified()==true))
+			{
+
 			return true;
-		else return false;
+			}
+	//	else {
+	//		return false;
+	//	}
 	}
 
 	

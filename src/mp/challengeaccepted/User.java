@@ -8,6 +8,12 @@ public class User extends Profile
 
 	private String sim;
 	
+	public User()
+	{
+		setName("Michael");
+		setPhoneNumber("015156150728");
+		setEmail("michaelwussler@freenet.de");
+	}
 	public void setUserName(String string) {
 		// TODO Auto-generated method stub
 		setName(string);
@@ -29,6 +35,7 @@ public class User extends Profile
 	public void verifyUser() {
 		// Hier die FUnktion um den User zu vertifizieren
 		setVerified(true);
+	
 		
 	}
 
