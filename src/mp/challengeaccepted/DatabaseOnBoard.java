@@ -11,7 +11,7 @@ import android.util.Log;
 
 public class DatabaseOnBoard 
 {
-	SQLiteDatabase myDB=null;
+	static SQLiteDatabase myDB;
 	
 
 	static final String DB_NAME ="ChallengeAccepted.db";
@@ -58,13 +58,18 @@ public class DatabaseOnBoard
 
 	public DatabaseOnBoard()
 	{
+<<<<<<< HEAD
 		
+=======
+		onCreateDBAndDBTabled();
+>>>>>>> Michael
 	}
 
 	void onCreateDBAndDBTabled()
 	{
-		
+		/*
 		try {
+<<<<<<< HEAD
 			if(databaseExist()){
 				myDB = SQLiteDatabase.openDatabase(DB_PATH+ DB_NAME, null, CREATE_IF_NECESSARY);
 			}
@@ -79,7 +84,13 @@ public class DatabaseOnBoard
 		//	myDB.delete(CONTACT_TABLE, null, null); 
 		//	myDB.delete(CHALLENGES_TABLE, null, null); 
 
+=======
+			myDB = openOrCreateDatabase(DB_NAME, Context.MODE_PRIVATE, null);
+		}
+			//myDB.delete(TABLE, null, null); 
+>>>>>>> Michael
 			{ 
+			
 				String sql ="create table if not exists " + USER_TABLE + " ("+ USER_NAME + " string, " + USER_NUMBER + " string, " + USER_MAIL + " string, " + USER_VERIFIED + " boolean)";
 				myDB.execSQL(sql);
 				sql ="create table if not exists " + CONTACT_TABLE + " ("+ CONTACT_NAME + " string, " + CONTACT_NUMBER + " string, " + CONTACT_MAIL + " string, " + CONTACT_SIM + " string, " + CONTACT_VERIFIED + " boolean)";
@@ -89,17 +100,22 @@ public class DatabaseOnBoard
 				
 			}
 			Log.d("Database","created");  
+<<<<<<< HEAD
 	    } 
 		finally 
 		{
 	         if (myDB != null);
 	         //myDB.close();
 	    }
+=======
+>>>>>>> Michael
 		
+	*/
 	}
 
 	//public 
 
+<<<<<<< HEAD
 	public User ladeUserProfile() {
 
 	//	myDB = Context.openOrCreateDatabase("mmyown.db", MODE_PRIVATE, null);
@@ -121,6 +137,8 @@ public class DatabaseOnBoard
 	
 		
 		}
+=======
+>>>>>>> Michael
 	
 	
 	/*
@@ -147,9 +165,13 @@ public class DatabaseOnBoard
 	
 	public void speichern(User user)
 	{
+<<<<<<< HEAD
 
 				myDB = SQLiteDatabase.openOrCreateDatabase(DB_NAME, null);
 
+=======
+				//myDB = SQLiteDatabase.openOrCreateDatabase(DB_NAME, null);
+>>>>>>> Michael
 
 				ContentValues contentValues=new ContentValues(); 
 				contentValues.put(USER_NAME, user.getName());
@@ -159,11 +181,18 @@ public class DatabaseOnBoard
 				contentValues.put(USER_SIM, user.getSim());
 				myDB.insert(USER_TABLE, null, contentValues);
 	}
+<<<<<<< HEAD
 	
 	public boolean databaseExist()
 	{
 	    File dbFile = new File(DB_PATH + DB_NAME);
 	    return dbFile.exists();
+=======
+
+	public void setDB(SQLiteDatabase arg) {
+		myDB=arg;
+		
+>>>>>>> Michael
 	}
 			
 }

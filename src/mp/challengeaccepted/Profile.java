@@ -11,6 +11,7 @@ public class Profile
 	private boolean verified=false;
 	private boolean registered =false; // gibt an, ob das Profil auf dem Server existiert
 
+<<<<<<< HEAD
 
 	
 	
@@ -20,6 +21,14 @@ public class Profile
 	
 	public Profile() {
 		// TODO Auto-generated constructor stub
+=======
+	public Profile() {
+		
+	}
+	
+	public Profile(String string) {
+		name=string;
+>>>>>>> Michael
 	}
 	/**
 	 * @return the name

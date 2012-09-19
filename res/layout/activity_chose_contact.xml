@@ -4,16 +4,6 @@
     android:layout_height="fill_parent" >
 
     <Button
-        android:id="@+id/buttonWriteChallenge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginLeft="14dp"
-        android:text="Challenge formulieren" />
-
-    <Button
         android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -21,13 +11,36 @@
         android:layout_alignParentTop="true"
         android:text="Kontakte mit ChallengeAccepted" />
 
-    <Button
-        android:id="@+id/button3"
+    <AutoCompleteTextView
+        android:id="@+id/autoCompleteContact"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/button1"
-        android:layout_alignRight="@+id/button2"
-        android:layout_below="@+id/button2"
-        android:text="Freunde einladen" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:ems="10"
+        android:hint="to..." />
+
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/button2" >
+
+        <LinearLayout
+            android:id="@+id/LayoutScrollView"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical" >
+
+            <Button
+                android:id="@+id/button3"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Freunde einladen" />
+
+        </LinearLayout>
+    </ScrollView>
 
 </RelativeLayout>

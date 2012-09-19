@@ -6,17 +6,17 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.support.v4.app.NavUtils;
 
-public class ChallengeInfoActivity extends Activity {
+public class ArchivAcceptedActivity extends Activity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_challenge_info);
+        setContentView(R.layout.activity_archiv_accepted);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_challenge_info, menu);
+        getMenuInflater().inflate(R.menu.activity_archiv_accepted, menu);
         return true;
     }
 

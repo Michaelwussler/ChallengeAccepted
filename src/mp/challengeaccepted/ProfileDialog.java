@@ -2,8 +2,12 @@ package mp.challengeaccepted;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.os.Bundle;
 import android.telephony.TelephonyManager;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -11,6 +15,10 @@ public class ProfileDialog extends Dialog {
 	private EditText yourname;
 	private EditText yournumber;
 	private EditText yourmail;
+<<<<<<< HEAD
+=======
+	private Button buttonOkay;
+>>>>>>> Michael
 
 
 		public EditText getYourname() {
@@ -59,11 +67,15 @@ public class ProfileDialog extends Dialog {
 					if(yourmail.getText().toString().length()!=0)
 					{
 						Log.d("onBackPressed","inSchleife");
+<<<<<<< HEAD
 						App.getUser().setUserName(yourname.getText().toString());
 						App.getUser().setUserPhoneNumber(yournumber.getText().toString());
 						App.getUser().setUserEmail(yourmail.getText().toString());
 						App.getUser().verifyUser();
 						App.checkUser();
+=======
+					
+>>>>>>> Michael
 						super.onBackPressed();
 					}
 					else
@@ -84,6 +96,34 @@ public class ProfileDialog extends Dialog {
 			}
 			
 		}
+<<<<<<< HEAD
+=======
+
+
+		@Override
+		protected void onCreate(Bundle savedInstanceState) 
+		{
+
+
+super.onCreate(savedInstanceState);
+		}
+
+
+		/**
+		 * @return the buttonOkay
+		 */
+		public Button getButtonOkay() {
+			return buttonOkay;
+		}
+
+
+		/**
+		 * @param buttonOkay the buttonOkay to set
+		 */
+		public void setButtonOkay(Button buttonOkay) {
+			this.buttonOkay = buttonOkay;
+		}
+>>>>>>> Michael
 	
 		
 		

@@ -26,27 +26,27 @@ public class User extends Profile
 	}
 	
 	
-	public void setUserName(String string) {
-		// TODO Auto-generated method stub
-		setName(string);
+	public User(String name, String phoneNumber, String email, boolean verified, String sim)
+	{
+		setName(name);
+		setPhoneNumber(phoneNumber);
+		setEmail(email);
+		setVerified(verified);
+		setSim("8949226070633163788");
+		Log.d("SIM",getSim()); 
+		 
+	}
+	
+	
+	public User() {
+		// TODO Auto-generated constructor stub
 	}
 
-	public void setUserPhoneNumber(String string) {
-		// TODO Auto-generated method stub
-		setPhoneNumber(string);
-	}
-
-	public void setUserEmail(String string) {
-		// TODO Auto-generated method stub
-		setEmail(string);
-	}
-	
-	
-	
 
 	public void verifyUser() {
 		// Hier die FUnktion um den User zu vertifizieren
 		setVerified(true);	
+<<<<<<< HEAD
 	}
 	
 	public void logUser(User user){
@@ -55,6 +55,8 @@ public class User extends Profile
 		Log.d("Nummer",user.getPhoneNumber());
 		Log.d("EMail",user.getEmail());
 		Log.d("Verifiziert",Integer.toString(user.getId()));
+=======
+>>>>>>> Michael
 	}
 
 	/**

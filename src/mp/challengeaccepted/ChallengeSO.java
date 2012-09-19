@@ -1,5 +1,9 @@
 package mp.challengeaccepted;
 
+<<<<<<< HEAD
+=======
+import java.util.ArrayList;
+>>>>>>> Michael
 
 import android.os.Bundle;
 import android.app.Activity;
@@ -32,8 +36,16 @@ public class ChallengeSO extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //ArrayList<Profile> receiver=(ArrayList<Profile>) savedInstanceState.get("Receiver");       
+        Log.d("Receiver",String.valueOf(((App)getApplication()).getErstellteChallenge().getReceiver().getName()));
         setContentView(R.layout.activity_challenge_so);
+<<<<<<< HEAD
 
+=======
+        
+        TextView textReceiver=(TextView)findViewById(R.id.textViewReceiver);
+        textReceiver.setText(((App)getApplication()).getErstellteChallenge().getReceiver().getName());
+>>>>>>> Michael
         LLTitle=(LinearLayout)findViewById(R.id.LLTitle);
         LLTitle.setOnClickListener(new OnClickListener() {
 			
@@ -61,9 +73,12 @@ public class ChallengeSO extends Activity {
         
         buttonSend = (Button) findViewById(R.id.buttonSend);
         buttonSend.setOnClickListener(new OnClickListener() {
-			
+			 
 			public void onClick(View arg0) {
+<<<<<<< HEAD
 				Challenge temp=new Challenge(getChallengeTitle(), getDescription(), getReceiver(), getSender(), getProof(), getChallengeStatus());
+=======
+>>>>>>> Michael
 				// DIE CHALLENGE VERSENDEN
 				// DIE CHALLENGE ABSPEICHERN
 				
@@ -124,7 +139,16 @@ public class ChallengeSO extends Activity {
 			InputFilter[] FilterArray = new InputFilter[1];
 			FilterArray[0] = new InputFilter.LengthFilter(100);
 			eingabe.setFilters(FilterArray);
-			
+			eingabe.setText(((App)getApplication()).getErstellteChallenge().getTitle());
+			Button buttonSave = (Button) dialog.findViewById(R.id.buttonOkay);
+			buttonSave.setOnClickListener(new OnClickListener() {
+				
+				public void onClick(View v) {
+					((TextView)LLTitle.getChildAt(1)).setText(eingabe.getText().toString());
+					dismissDialog(1);
+				}
+			});
+			/*
 			dialog.setOnDismissListener(new OnDismissListener() {
 				
 				public void onDismiss(DialogInterface dialog) 
@@ -132,36 +156,67 @@ public class ChallengeSO extends Activity {
 					((TextView)LLTitle.getChildAt(1)).setText(eingabe.getText().toString());
 				}
 			});
+			*/
 		}
 		
 		if(id==2)
 		{
 			dialog.setContentView(R.layout.activity_dialog_challenge_edit);
 			final EditText eingabe=(EditText)dialog.findViewById(R.id.editTextEingabe);
+			eingabe.setText(((App)getApplication()).getErstellteChallenge().getDescription());
 
+			Button buttonSave = (Button) dialog.findViewById(R.id.buttonOkay);
+			buttonSave.setOnClickListener(new OnClickListener() {
+				
+				public void onClick(View v) {
+					((TextView)LLDescription.getChildAt(1)).setText(eingabe.getText().toString());
+					dismissDialog(2);
+				}
+			});
 			dialog.setTitle("Edit description");
+<<<<<<< HEAD
 			dialog.setOnDismissListener(new OnDismissListener(){
+=======
+			/*
+			 * dialog.setOnDismissListener(new OnDismissListener() {
+			 
+>>>>>>> Michael
 				
 				public void onDismiss(DialogInterface dialog) 
 				{
 					((TextView)LLDescription.getChildAt(1)).setText(eingabe.getText().toString());
 				}
 			});
+			*/
 		}
 		
 		if(id==3)
 		{
 			dialog.setContentView(R.layout.activity_dialog_challenge_edit);
 			final EditText eingabe=(EditText)dialog.findViewById(R.id.editTextEingabe);
+			eingabe.setText(((App)getApplication()).getErstellteChallenge().getProof());
 
 			dialog.setTitle("Edit proof");
+			
+			Button buttonSave = (Button) dialog.findViewById(R.id.buttonOkay);
+			buttonSave.setOnClickListener(new OnClickListener() {
+				
+				public void onClick(View v) {
+					((TextView)LLProof.getChildAt(1)).setText(eingabe.getText().toString());
+					dismissDialog(3);
+				}
+			});
+			
+			/*
 			dialog.setOnDismissListener(new OnDismissListener() {
+				
 				
 				public void onDismiss(DialogInterface dialog) 
 				{
 					((TextView)LLProof.getChildAt(1)).setText(eingabe.getText().toString());
 				}
 			});
+			*/
 		}
 		return dialog;
 	}
