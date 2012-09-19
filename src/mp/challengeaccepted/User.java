@@ -2,41 +2,33 @@ package mp.challengeaccepted;
 
 import android.content.Context;
 import android.telephony.TelephonyManager;
+import android.util.Log;
 
 public class User extends Profile 
 {
 
 	private String sim;
 	
-	public User()
+	public User(String name, String phoneNumber, String email, boolean verified, String sim)
 	{
-		setName("Michael");
-		setPhoneNumber("015156150728");
-		setEmail("michaelwussler@freenet.de");
+		setName(name);
+		setPhoneNumber(phoneNumber);
+		setEmail(email);
+		setVerified(verified);
+		setSim("8949226070633163788");
+		Log.d("SIM",getSim()); 
+		 
 	}
-	public void setUserName(String string) {
-		// TODO Auto-generated method stub
-		setName(string);
+	
+	
+	public User() {
+		// TODO Auto-generated constructor stub
 	}
 
-	public void setUserPhoneNumber(String string) {
-		// TODO Auto-generated method stub
-		setPhoneNumber(string);
-	}
-
-	public void setUserEmail(String string) {
-		// TODO Auto-generated method stub
-		setEmail(string);
-	}
-	
-	
-	
 
 	public void verifyUser() {
 		// Hier die FUnktion um den User zu vertifizieren
-		setVerified(true);
-	
-		
+		setVerified(true);	
 	}
 
 	/**

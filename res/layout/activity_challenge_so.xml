@@ -3,7 +3,8 @@
     android:id="@+id/LinearLayout1"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical" 
+    android:padding="3dp">
 
     <LinearLayout
         android:id="@+id/LLTitle"
@@ -17,7 +18,7 @@
             android:layout_height="wrap_content"
             android:background="@color/Grau"
             android:gravity="center"
-            android:text="Short Description" />
+            android:text="Title" />
 
         <TextView
             android:id="@+id/textView4"
@@ -39,7 +40,7 @@
             android:layout_height="wrap_content"
             android:background="@color/Grau"
             android:gravity="center"
-            android:text="Long Description" />
+            android:text="Description" />
 
         <TextView
             android:id="@+id/textView5"
@@ -85,7 +86,7 @@
             android:text="Receiver" />
 
         <TextView
-            android:id="@+id/textView7"
+            android:id="@+id/textViewReceiver"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Otto Normalverbraucher" />

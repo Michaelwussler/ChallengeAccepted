@@ -9,5 +9,11 @@
     <string name="title_activity_challenge_info">MainActivity</string>
     <string name="title_activity_inputnumber">MainActivity</string>
     <string name="title_activity_dialog_challenge_edit">MainActivity</string>
+    <string name="title_activity_chosecontactlist">MainActivity</string>
+    <string name="title_activity_archiv">MainActivity</string>
+    <string name="title_activity_archiv_completed">MainActivity</string>
+    <string name="title_activity_archiv_open">MainActivity</string>
+    <string name="title_activity_archiv_accepted">MainActivity</string>
+    <string name="title_activity_archiv_denied">MainActivity</string>
 
 </resources>

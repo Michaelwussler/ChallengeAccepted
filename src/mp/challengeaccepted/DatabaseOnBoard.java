@@ -9,7 +9,7 @@ import android.util.Log;
 
 public class DatabaseOnBoard 
 {
-	SQLiteDatabase myDB=null;
+	static SQLiteDatabase myDB;
 	
 
 	static final String DB_NAME ="ChallengeAccepted.db";
@@ -51,19 +51,18 @@ public class DatabaseOnBoard
 
 	public DatabaseOnBoard()
 	{
-	//	onCreateDBAndDBTabled();
+		onCreateDBAndDBTabled();
 	}
 
 	private void onCreateDBAndDBTabled()
 	{
-		
+		/*
 		try {
-			myDB = SQLiteDatabase.openOrCreateDatabase(DB_NAME, null);
-			myDB.delete(USER_TABLE, null, null); 
-			myDB.delete(CONTACT_TABLE, null, null); 
-			myDB.delete(CHALLENGES_TABLE, null, null); 
-
+			myDB = openOrCreateDatabase(DB_NAME, Context.MODE_PRIVATE, null);
+		}
+			//myDB.delete(TABLE, null, null); 
 			{ 
+			
 				String sql ="create table if not exists " + USER_TABLE + " ("+ USER_NAME + " string, " + USER_NUMBER + " string, " + USER_MAIL + " string, " + USER_VERIFIED + " boolean)";
 				myDB.execSQL(sql);
 				sql ="create table if not exists " + CONTACT_TABLE + " ("+ CONTACT_NAME + " string, " + CONTACT_NUMBER + " string, " + CONTACT_MAIL + " string, " + CONTACT_SIM + " string, " + CONTACT_VERIFIED + " boolean)";
@@ -73,29 +72,11 @@ public class DatabaseOnBoard
 				
 			}
 			Log.d("Database","created");  
-	    } 
-		finally 
-		{
-	         if (myDB != null);
-	         //myDB.close();
-	    }
 		
+	*/
 	}
 
 
-	public User ladeUserProfile() {
-		String tempname;				
-		myDB = SQLiteDatabase.openOrCreateDatabase(DB_NAME, null);
-
-		Cursor c = myDB.query(USER_TABLE, null,null, null, null, null, null);
-	    
-		
-		Log.d("Name",c.getString(0));
-		Log.d("Nummer",c.getString(1));
-		Log.d("EMail",c.getString(2));
-		Log.d("Verifiziert",c.getString(3));
-		return null;
-	}
 	
 	
 	/*
@@ -131,6 +112,11 @@ public class DatabaseOnBoard
 				contentValues.put(USER_VERIFIED, user.isVerified());
 				contentValues.put(USER_SIM, user.getSim());
 				myDB.insert(USER_TABLE, null, contentValues);
+	}
+
+	public void setDB(SQLiteDatabase arg) {
+		myDB=arg;
+		
 	}
 			
 }

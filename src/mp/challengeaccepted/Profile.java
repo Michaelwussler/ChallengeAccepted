@@ -10,7 +10,13 @@ public class Profile
 	private String email;
 	private boolean verified=false;
 
+	public Profile() {
+		
+	}
 	
+	public Profile(String string) {
+		name=string;
+	}
 	/**
 	 * @return the name
 	 */
