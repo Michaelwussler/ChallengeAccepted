@@ -1,6 +1,8 @@
 package mp.challengeaccepted;
 
 
+import java.io.File;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -14,6 +16,8 @@ public class DatabaseOnBoard
 
 	static final String DB_NAME ="ChallengeAccepted.db";
 	static final int DB_VERSION =1;
+	static final String DB_PATH = "/data/data/mp.challengeaccepted/databases/";
+	static final int CREATE_IF_NECESSARY = 268435456;
 	
 ////////////////////////////////////////////	
 	static final String USER_TABLE="user";
@@ -46,6 +50,9 @@ public class DatabaseOnBoard
 	static final String C_DESCRIPTION ="longDescription";
 	static final String C_PROOF ="proof"; 
 	static final String C_STATUS="status";
+
+
+	private static final int MODE_PRIVATE = 0;
 	
 	Context context;
 
@@ -54,14 +61,23 @@ public class DatabaseOnBoard
 		
 	}
 
-	private void onCreateDBAndDBTabled()
+	void onCreateDBAndDBTabled()
 	{
 		
 		try {
-			myDB = SQLiteDatabase.openOrCreateDatabase(DB_NAME, null);
-			myDB.delete(USER_TABLE, null, null); 
-			myDB.delete(CONTACT_TABLE, null, null); 
-			myDB.delete(CHALLENGES_TABLE, null, null); 
+			if(databaseExist()){
+				myDB = SQLiteDatabase.openDatabase(DB_PATH+ DB_NAME, null, CREATE_IF_NECESSARY);
+			}
+				
+			else{
+				myDB= SQLiteDatabase.create(null);
+			}
+			
+			Log.i("Path zur DB", myDB.getPath());
+		//	myDB = SQLiteDatabase.openOrCreateDatabase(DB_NAME, null);
+		//	myDB.delete(USER_TABLE, null, null); 
+		//	myDB.delete(CONTACT_TABLE, null, null); 
+		//	myDB.delete(CHALLENGES_TABLE, null, null); 
 
 			{ 
 				String sql ="create table if not exists " + USER_TABLE + " ("+ USER_NAME + " string, " + USER_NUMBER + " string, " + USER_MAIL + " string, " + USER_VERIFIED + " boolean)";
@@ -82,22 +98,29 @@ public class DatabaseOnBoard
 		
 	}
 
+	//public 
 
 	public User ladeUserProfile() {
-		String tempname;				
 
-		myDB = SQLiteDatabase.openOrCreateDatabase(DB_NAME, null);
-
-		Cursor c = myDB.query(USER_TABLE, null,null, null, null, null, null);
-
-	    
+	//	myDB = Context.openOrCreateDatabase("mmyown.db", MODE_PRIVATE, null);
 		
-		Log.d("Name",c.getString(0));
-		Log.d("Nummer",c.getString(1));
-		Log.d("EMail",c.getString(2));
-		Log.d("Verifiziert",c.getString(3));
-		return null;
-	}
+		User tmpuser = null;
+		Cursor c = myDB.query(USER_TABLE, null,null, null, null, null, null);
+		if(c.getCount()!=0){
+			tmpuser = new User(c.getString(0), c.getString(1), c.getString(2));
+		
+			Log.d("Name",c.getString(0));
+			Log.d("Nummer",c.getString(1));
+			Log.d("EMail",c.getString(2));
+			Log.d("Verifiziert",c.getString(3));
+		}
+		else{
+			tmpuser = new User();
+		}
+		return tmpuser;
+	
+		
+		}
 	
 	
 	/*
@@ -135,6 +158,12 @@ public class DatabaseOnBoard
 				contentValues.put(USER_VERIFIED, user.isVerified());
 				contentValues.put(USER_SIM, user.getSim());
 				myDB.insert(USER_TABLE, null, contentValues);
+	}
+	
+	public boolean databaseExist()
+	{
+	    File dbFile = new File(DB_PATH + DB_NAME);
+	    return dbFile.exists();
 	}
 			
 }

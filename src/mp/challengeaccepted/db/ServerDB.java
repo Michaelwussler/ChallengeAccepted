@@ -1,6 +1,8 @@
 package mp.challengeaccepted.db;
 import java.util.ArrayList;
 
+import mp.challengeaccepted.App;
+import mp.challengeaccepted.DatabaseHandlerProfile;
 import mp.challengeaccepted.Profile;
 
 import org.json.JSONException;
@@ -85,19 +87,22 @@ public class ServerDB
     	}
 	}
 	
-
-	static public void profilSync(ArrayList<Profile> argProfile){
+	//Übergibt alle nicht regitrierten Profile und gibt die zurück, die existieren auf der Server DB
+	static public ArrayList<Profile> profilSync(ArrayList<Profile> alleNichtRegistriertenProfile){
+		ArrayList<Profile> tmp = new ArrayList<Profile>();
 		
-    	for(Profile n:argProfile){
-    		if(!(n.isRegistered()))
+    	for(Profile n:alleNichtRegistriertenProfile){
+    			Log.i("Telefonnummer KUCKENE!!!!!", n.getPhoneNumber());
     			if(ServerDB.isUser(n)){
     		    		Log.d("ServerDB test", "USER X existiert.");
+    		    		tmp.add(n);
     			}
     			else{
         		Log.d("ServerDB test", "USER X existiert nicht");
     			}
     	}
-
+    	
+    	return tmp;
 	}
 
 	

@@ -57,37 +57,61 @@ public class StartActivity extends Activity
         super.onCreate(savedInstanceState);
 
         Log.d("Start","OnCreate");
+
+        //PROFILE TEST
+        Profile pr = new Profile();
+        pr.setName("Peter Raiser");
+        pr.setEmail("praiser@gmx.de");
+        pr.setPhoneNumber("015771356010");
         
-        if(((App) getApplication()).getUser().isVerified()==false)
+        Profile gs = new Profile();
+        gs.setName("GerdSchneider");
+        gs.setEmail("gs@gmx.de");
+        gs.setPhoneNumber("911");
+        
+        Profile mw = new Profile();
+        mw.setName("Michi");
+        mw.setEmail("michi@gmx.de");
+        mw.setPhoneNumber("123123123");
+        
+        ServerDB.isUser(gs);
+        ServerDB.isUser(mw);
+        ServerDB.isUser(pr);
+        
+        DatabaseHandlerProfile dbhelperProfile = new DatabaseHandlerProfile(this);
+        
+        dbhelperProfile.deleteProfile();
+        
+        dbhelperProfile.addProfile(pr);
+        dbhelperProfile.addProfile(gs);
+        dbhelperProfile.addProfile(mw);
+        
+        dbhelperProfile.profilSync(ServerDB.profilSync(dbhelperProfile.getAllUnregistered()));
+        
+        //dbhelperProfile.register(pr);
+        
+        //dbhelperProfile.print("015771356010");
+        //dbhelperProfile.print("911");
+        
+        Log.i("TEst ob isRegistred tut: für 0157...", Boolean.toString(dbhelperProfile.isRegistered(pr)));
+        Log.i("TEst ob isRegistred tut: für 911...", Boolean.toString(dbhelperProfile.isRegistered(gs)));
+      //  dbhelperProfile.register(gs);
+        Log.i("TEst ob isRegistred tut: für 123123123...", Boolean.toString(dbhelperProfile.isRegistered(mw)));
 
-        {	
-        	
-        	ArrayList<Profile> testlist = new ArrayList<Profile>();
-        	testlist.add(new Profile("01"));
-        	testlist.add(new Profile("02"));
-        	testlist.add(new Profile("04"));
-        	testlist.add(new Profile("1231"));
+        ArrayList<Profile> registeredProfiles = dbhelperProfile.getAllRegistered();
        
-        	
-        	ServerDB.profilSync(testlist);
+        for(Profile n: registeredProfiles){
+        	Log.i("Name des registrierten USERS", n.getName());
+        }
+        
+        ArrayList<Profile> UnregisteredProfiles = dbhelperProfile.getAllUnregistered();
 
-        		Log.d("ServerDB test", "User TEL wird ausgelesen"+ testlist.get(0).getPhoneNumber());    		
-        		Log.d("ServerDB test", "User ID wird ausgelesen"+ testlist.get(0).getId());    		
-
-        		Log.d("ServerDB test", "User TEL wird ausgelesen"+ testlist.get(1).getPhoneNumber());    		
-        		Log.d("ServerDB test", "User ID wird ausgelesen"+ testlist.get(1).getId()); 
-        		
-        		Log.d("ServerDB test", "User TEL wird ausgelesen"+ testlist.get(2).getPhoneNumber());    		
-        		Log.d("ServerDB test", "User ID wird ausgelesen"+ testlist.get(2).getId()); 
-        		
-        		Log.d("ServerDB test", "User TEL wird ausgelesen"+ testlist.get(3).getPhoneNumber());    		
-        		Log.d("ServerDB test", "User ID wird ausgelesen"+ testlist.get(3).getId()); 
-			     	
-    		App.getUser().setVerified(true);
-    		
-    		
-   
-        }   
+        
+        for(Profile n: UnregisteredProfiles){
+        	Log.i("Name des nichtregistrierten USERS", n.getName());
+        }
+         
+        
         setContentView(R.layout.activity_start); 
         buttonChallengeSo=(Button) findViewById(R.id.buttonChallengeSO);
         buttonChallengeSo.setOnClickListener(new OnClickListener() {

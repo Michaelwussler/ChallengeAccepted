@@ -8,7 +8,7 @@ public class App extends Application
 {
 	private static User user=new User();
 	private static String sim;
-	private static DatabaseOnBoard myDB=new DatabaseOnBoard();
+	private static DatabaseOnBoard myDB = new DatabaseOnBoard();
 	
 	@Override
 	public void onCreate() 
@@ -23,7 +23,7 @@ public class App extends Application
 	/**
 	 * @return the myDB
 	 */
-	public DatabaseOnBoard getMyDB() {
+	static public DatabaseOnBoard getMyDB() {
 		return myDB;
 	}
 

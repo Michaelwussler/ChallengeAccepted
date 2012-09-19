@@ -3,96 +3,145 @@ package mp.challengeaccepted;
 import java.util.ArrayList;
 import java.util.List;
 
+import mp.challengeaccepted.db.DBFunctions;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 
 	//Klasse zur Bearbeitung CRUD der Datatbase
 
-public class DatabaseHandler extends SQLiteOpenHelper {
+public class DatabaseHandlerUser extends SQLiteOpenHelper {
 		 
 	// static Variablen zur Beschreibung der Database
-
-	static final int DB_VERSION =1;
-	
-	////////////////////////////////////////////
-	static final String USER_TABLE="user";
-	//----------------------------------------	
-	static final String USER_NAME="name";
-	static final String USER_MAIL="mail";
-	static final String USER_NUMBER="number";
-	static final String USER_VERIFIED="verfied";
-	
-	////////////////////////////////////////////////////
-	static final String CONTACT_TABLE="contacts";
-	//---------------------------------------------------
-	static final String CONTACT_NAME="name";
-	static final String CONTACT_NUMBER="number";
-	static final String CONTACT_MAIL="mail";
-	static final String CONTACT_VERIFIED="verified";
-	
-	
-	///////////////////////////////////////////////////7
-	static final String CHALLENGES_TABLE ="challenges";
-	//-------------------------------------------------
-	static final String C_ID="_ID";
-	static final String C_TIMESTAMP = "created_at";
-	static final String C_SENDER = "sender";
-	static final String C_RECEIVER ="receiver";
-	static final String C_TITLE ="shortDescription";
-	static final String C_DESCRIPTION ="longDescription";
-	static final String C_PROOF ="proof";
-	static final String C_STATUS="status";
-	
-	Context context;
-	
+	// Database Version
     private static final int DATABASE_VERSION = 1;
     
     // Database Name
-    private static final String DATABASE_NAME = "ChallangeAccepted";	 
+    private static final String DATABASE_NAME = "challange";	 
 
-    // Profile table name
-    private static final String TABLE_PROFILES = "profiles";
+    private static final String TABLE_USERS = "user";
 
-    // Profile Table Columns names
+   
     private static final String KEY_ID = "id";
     private static final String KEY_NAME = "name";
-    private static final String KEY_PASSWORT = "passwort";
-    private static final String KEY_FAHRZEUG = "fahrzeug";
-//    private static final String KEY_WEIBLICH = "weiblich";
+    private static final String KEY_TELEFONNUMMER = "telefonnummer";
+    private static final String KEY_EMAIL = "email";
+    private static final String KEY_VERIFIED = "verified";
+    private static final String KEY_REGISTERED = "registered";
+    private static final String KEY_SIM = "sim";
 
-    // Konstructor 
-    public DatabaseHandler(Context context) {
-    super(context, DATABASE_NAME, null, DATABASE_VERSION);
-	    }
-	 
+    //Konstruktor
+    public DatabaseHandlerUser(Context context) {
+    	  super(context, DATABASE_NAME, null,DATABASE_VERSION); 
+    	  }
+	
     // Erstellen einer Database onCreate()
 	@Override
     public void onCreate(SQLiteDatabase db) {
-    String CREATE_CONTACTS_TABLE = "CREATE TABLE " + USER_TABLE + "("
-    								+ KEY_ID + " INTEGER PRIMARY KEY,"
-    								+ KEY_NAME + " TEXT," + KEY_PASSWORT + " TEXT,"
-    								+ KEY_FAHRZEUG + " TEXT" +/*,"+ KEY_WEIBLICH + " INTEGER PRIMARY KEY"*/ ")";
-	        db.execSQL(CREATE_CONTACTS_TABLE);
+		  // TODO Auto-generated method stub
+		  
+		  db.execSQL("CREATE TABLE "+TABLE_USERS+" ("+KEY_ID+ " INTEGER PRIMARY KEY , "
+		  +KEY_NAME+ " TEXT, " 
+		  +KEY_TELEFONNUMMER+ " TEXT, "
+		  +KEY_EMAIL+ " TEXT, "
+		  +KEY_VERIFIED+ " TEXT, "
+		  +KEY_REGISTERED+ " TEXT, "
+		  +KEY_SIM+ " TEXT)");
 	}
+
 	 
-	// �nderungen auf die Database �bertragen onUpgrade()
-	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-	// L�scht altes Table (falls existent)
-	db.execSQL("DROP TABLE IF EXISTS " + TABLE_PROFILES);
-	 
-	// Erschafft ein neues, mit den neuen Daten
-	onCreate(db);
-	}
+		  // TODO Auto-generated method stub
+		  
+		  db.execSQL("DROP TABLE IF EXISTS "+TABLE_USERS);
+		  
+		  onCreate(db);
+		 }
 	
 	 /**
      * All CRUD(Create, Read, Update, Delete) Operations
      */
+    // Neuen User erstellen
+    void addUser(User user) {
+        SQLiteDatabase db = this.getWritableDatabase();
  
+        ContentValues values = new ContentValues();
+        values.put(KEY_NAME, user.getName()); 
+        values.put(KEY_TELEFONNUMMER, user.getPhoneNumber()); 
+        values.put(KEY_EMAIL,  user.getEmail()); 
+        values.put(KEY_VERIFIED, Boolean.toString(user.isVerified())); 
+        values.put(KEY_REGISTERED, Boolean.toString(user.isRegistered())); 
+        values.put(KEY_SIM, user.getSim());
+        // Reihe in Tabelle eintragen
+        
+        db.insert(TABLE_USERS, KEY_NAME, values);
+        db.close(); // database Verbindung schliessen
+    }
+	
+    public User getUser(){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        User tmpuser = null;
+		Cursor c = db.query(TABLE_USERS, null,null, null, null, null, null);
+		c.moveToFirst();
+		
+		if(c.getCount()!=0){
+			tmpuser = new User(c.getString(1), c.getString(2), c.getString(3));
+			Log.d("ID",String.valueOf(c.getInt(0)));
+			Log.d("Name",c.getString(1));
+			Log.d("Nummer",c.getString(2));
+			Log.d("EMail",c.getString(3));
+			Log.d("Verifiziert",c.getString(4));
+			Log.d("SIM",c.getString(6));
+
+		}
+		else{
+			tmpuser = new User();
+		}
+		c.close();
+		db.close();
+		return tmpuser;
+    }
+    
+    // User loeschen
+    public int deleteUser()
+    {
+     SQLiteDatabase db=this.getWritableDatabase();
+     int tmp = db.delete(TABLE_USERS, null, null);
+     db.close();
+     return tmp;
+    }
+    
+    //User als verified setzen
+    public void verifyUser(User user)
+    {
+    SQLiteDatabase db=this.getWritableDatabase();
+    
+    ContentValues values = new ContentValues();
+    values.put(KEY_VERIFIED, "true");
+    db.update(TABLE_USERS, values, null, null);
+    
+    db.close();
+    }
+   
+    //User Sim setzen
+    public void setSim(String sim)
+    {
+    SQLiteDatabase db=this.getWritableDatabase();
+    
+    ContentValues values = new ContentValues();
+    values.put(KEY_SIM, sim); 
+    db.update(TABLE_USERS, values, null, null);
+    
+    db.close();
+    }
+//    
 //    // Neues Profil erstellen
 //    void addProfil(Profil profil) {
 //        SQLiteDatabase db = this.getWritableDatabase();
@@ -181,5 +230,5 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 //        // R�ckgabe des Werts
 //        return cursor.getCount();
 //    }
-// 
+ 
 }
