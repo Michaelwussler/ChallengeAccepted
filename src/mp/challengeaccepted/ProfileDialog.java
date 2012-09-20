@@ -15,10 +15,8 @@ public class ProfileDialog extends Dialog {
 	private EditText yourname;
 	private EditText yournumber;
 	private EditText yourmail;
-<<<<<<< HEAD
-=======
 	private Button buttonOkay;
->>>>>>> Michael
+
 
 
 		public EditText getYourname() {
@@ -67,15 +65,6 @@ public class ProfileDialog extends Dialog {
 					if(yourmail.getText().toString().length()!=0)
 					{
 						Log.d("onBackPressed","inSchleife");
-<<<<<<< HEAD
-						App.getUser().setUserName(yourname.getText().toString());
-						App.getUser().setUserPhoneNumber(yournumber.getText().toString());
-						App.getUser().setUserEmail(yourmail.getText().toString());
-						App.getUser().verifyUser();
-						App.checkUser();
-=======
-					
->>>>>>> Michael
 						super.onBackPressed();
 					}
 					else
@@ -96,8 +85,6 @@ public class ProfileDialog extends Dialog {
 			}
 			
 		}
-<<<<<<< HEAD
-=======
 
 
 		@Override
@@ -123,7 +110,7 @@ super.onCreate(savedInstanceState);
 		public void setButtonOkay(Button buttonOkay) {
 			this.buttonOkay = buttonOkay;
 		}
->>>>>>> Michael
+
 	
 		
 		

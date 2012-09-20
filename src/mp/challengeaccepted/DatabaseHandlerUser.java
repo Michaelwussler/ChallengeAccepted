@@ -26,6 +26,7 @@ public class DatabaseHandlerUser extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "challange";	 
 
     private static final String TABLE_USERS = "user";
+    private static final String TABLE_PROFILES = "profile";
 
    
     private static final String KEY_ID = "id";
@@ -38,7 +39,7 @@ public class DatabaseHandlerUser extends SQLiteOpenHelper {
 
     //Konstruktor
     public DatabaseHandlerUser(Context context) {
-    	  super(context, DATABASE_NAME, null,DATABASE_VERSION); 
+    	  super(context, DATABASE_NAME, null, DATABASE_VERSION); 
     	  }
 	
     // Erstellen einer Database onCreate()
@@ -53,6 +54,14 @@ public class DatabaseHandlerUser extends SQLiteOpenHelper {
 		  +KEY_VERIFIED+ " TEXT, "
 		  +KEY_REGISTERED+ " TEXT, "
 		  +KEY_SIM+ " TEXT)");
+		  Log.d("CREATE ON TABLE", "BLA");
+		  
+		  db.execSQL("CREATE TABLE "+TABLE_PROFILES+	   
+				    "("+KEY_ID+" INTEGER PRIMARY KEY AUTOINCREMENT, "
+				  +KEY_NAME+ " TEXT, " 
+				  +KEY_TELEFONNUMMER+ " TEXT, "
+				  +KEY_EMAIL+ " TEXT, "
+				  +KEY_REGISTERED+ " TEXT)");
 	}
 
 	 
@@ -69,8 +78,9 @@ public class DatabaseHandlerUser extends SQLiteOpenHelper {
      */
     // Neuen User erstellen
     void addUser(User user) {
+        deleteUser();  
         SQLiteDatabase db = this.getWritableDatabase();
- 
+       
         ContentValues values = new ContentValues();
         values.put(KEY_NAME, user.getName()); 
         values.put(KEY_TELEFONNUMMER, user.getPhoneNumber()); 
@@ -78,6 +88,9 @@ public class DatabaseHandlerUser extends SQLiteOpenHelper {
         values.put(KEY_VERIFIED, Boolean.toString(user.isVerified())); 
         values.put(KEY_REGISTERED, Boolean.toString(user.isRegistered())); 
         values.put(KEY_SIM, user.getSim());
+        Log.i("Telefonausgabe bei addUSer", user.getPhoneNumber());
+
+        Log.i("Simausgabe bei addUSer", user.getSim());
         // Reihe in Tabelle eintragen
         
         db.insert(TABLE_USERS, KEY_NAME, values);
@@ -85,7 +98,7 @@ public class DatabaseHandlerUser extends SQLiteOpenHelper {
     }
 	
     public User getUser(){
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = this.getReadableDatabase();
 
         User tmpuser = null;
 		Cursor c = db.query(TABLE_USERS, null,null, null, null, null, null);

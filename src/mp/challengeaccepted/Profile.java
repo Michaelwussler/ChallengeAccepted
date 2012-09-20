@@ -1,5 +1,13 @@
 package mp.challengeaccepted;
 
+import com.google.i18n.phonenumbers.NumberParseException;
+import com.google.i18n.phonenumbers.PhoneNumberUtil;
+import com.google.i18n.phonenumbers.Phonenumber.PhoneNumber;
+
+import android.telephony.PhoneNumberUtils;
+import android.text.Editable;
+import android.util.Log;
+
 
 
 public class Profile 
@@ -11,25 +19,16 @@ public class Profile
 	private boolean verified=false;
 	private boolean registered =false; // gibt an, ob das Profil auf dem Server existiert
 
-<<<<<<< HEAD
 
 	
 	
 	public Profile(String telefonnummer) {
 		this.phoneNumber = telefonnummer;
 	}
-	
+
 	public Profile() {
-		// TODO Auto-generated constructor stub
-=======
-	public Profile() {
-		
 	}
 	
-	public Profile(String string) {
-		name=string;
->>>>>>> Michael
-	}
 	/**
 	 * @return the name
 	 */
@@ -51,8 +50,27 @@ public class Profile
 	/**
 	 * @param string the phoneNumber to set
 	 */
-	public void setPhoneNumber(String string) {
-		this.phoneNumber = string;
+	public void setPhoneNumber(String string) {	//TODO vorwahl vom jeweiligen Land vor die NUmmer setzen...!
+
+		Log.i("nicht formatierte NUmmer", string);
+		
+			PhoneNumberUtil phoneUtil = PhoneNumberUtil.getInstance();
+			try {
+				PhoneNumber standardtisierteNummer = phoneUtil.parse(string, "DE");
+				Log.i("formatierte NUmmer", standardtisierteNummer.toString());
+				String a = standardtisierteNummer.toString().substring(14);
+				Log.i("a", a);
+				String b = a.substring(0,a.indexOf(" "));
+				Log.i("b", b);
+				String c = a.substring(a.lastIndexOf(" ")+1);
+				Log.i("c", c);
+				String d = b+c;
+				Log.i("d", d);
+				this.phoneNumber = d;
+			} catch (NumberParseException e) {
+			  System.err.println("NumberParseException was thrown: " + e.toString());
+			}
+
 	}
 	/**
 	 * @return the id

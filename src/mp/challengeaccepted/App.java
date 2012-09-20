@@ -3,24 +3,23 @@ package mp.challengeaccepted;
 import java.util.ArrayList;
 
 import android.app.Application;
+import android.content.ContentResolver;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.provider.ContactsContract;
+import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 
 public class App extends Application 
 {
-<<<<<<< HEAD
+
 	private static User user=new User();
-	private static String sim;
-	private static DatabaseOnBoard myDB = new DatabaseOnBoard();
-=======
-	private User user;
-	private DatabaseOnBoard myDB;//=new DatabaseOnBoard();
 	private ArrayList<Profile> contacts=new ArrayList<Profile>();
 	private ArrayList<Challenge> challenges=new ArrayList<Challenge>();
 	private Challenge erstellteChallenge=new Challenge();
->>>>>>> Michael
+
 	
 	public ArrayList<Challenge> getChallenges() {
 		return challenges;
@@ -33,21 +32,17 @@ public class App extends Application
 	@Override
 	public void onCreate() 
 	{
-<<<<<<< HEAD
-		Log.d("App","OnCreate");
-		//setUser(getMyDB().ladeUserProfile());
-		//CONTACT UPDATE
-		//CHALLENGE SYNCRONISATION
-=======
+
+		DatabaseHandlerUser dbuser = new DatabaseHandlerUser(getApplicationContext());
 		Log.d("App","onCreate");
-		user=ladeUserProfil();
+		
+		user = dbuser.getUser();
 		if((user.isVerified()==true)&&(user.getSim().equals(((TelephonyManager)getSystemService(TELEPHONY_SERVICE)).getSimSerialNumber())))
 		{	
-			contacts=ladeProfile();
+			ladeProfile();
 			challenges=ladeChallenges();
 		}
 
->>>>>>> Michael
 		super.onCreate();
 	}
 
@@ -57,31 +52,53 @@ public class App extends Application
 		
 	}
 
-	private ArrayList<Profile> ladeProfile() {
-		return contacts;
-		// TODO Auto-generated method stub
+	public void ladeProfile() {		
+	
+		ArrayList<Profile> arg = new ArrayList<Profile>();
 		
-	}
+        ContentResolver cr = getContentResolver();
+        Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI, new String[]{ContactsContract.Contacts._ID, ContactsContract.Contacts.DISPLAY_NAME, ContactsContract.Contacts.HAS_PHONE_NUMBER}, ContactsContract.Contacts.IN_VISIBLE_GROUP + " = 1", null, ContactsContract.Contacts.DISPLAY_NAME);
+        Log.d("AnzahKontakte",String.valueOf(cur.getCount()));
+        if(cur.getCount() > 0)
+        {
+        while(cur.moveToNext()) {
+        	Profile tmp = new Profile();
+        	
+            String id = cur.getString(cur.getColumnIndex(ContactsContract.Contacts._ID));
+            String name = cur.getString(cur.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
+            Log.d("Name",name);
+            tmp.setName(name);
+            if(Integer.parseInt(cur.getString(cur.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER))) > 0) {
+            Cursor pCur = cr.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,new String[]{Phone.NUMBER, Phone.TYPE},ContactsContract.CommonDataKinds.Phone.CONTACT_ID +" = ?",new String[]{id}, null);
+                    while(pCur.moveToNext())
+                    {
+                        if(pCur.getInt(pCur.getColumnIndex(Phone.TYPE)) == Phone.TYPE_MOBILE){
+                          Log.d("PhoneNumber",pCur.getString(pCur.getColumnIndex(Phone.NUMBER)));
+                          tmp.setPhoneNumber(pCur.getString(pCur.getColumnIndex(Phone.NUMBER)));
+                            break;
+                        }
+                    }
+                    pCur.close();
+            }
+            arg.add(tmp);
+        }
+        DatabaseHandlerProfile dbp = new DatabaseHandlerProfile(getApplicationContext());
+        
+        for(Profile n:arg){ 
+        	dbp.addProfile(n);
+        	}
+    }
+    
+    }
+		
+	
 
 	private User ladeUserProfil() {  
 		// TASK PETER HIER NE ORDENTLICH FUNKTION ZUR AUSLESE DER USER_DATEN DER DATENBANK
-		user=new User("Michael Wuﬂler","015156150728","michaelwussler@freenet.de",true,((TelephonyManager)getSystemService(TELEPHONY_SERVICE)).getSimSerialNumber());
+		user=new User();//"Michael Wuﬂler","015156150728","michaelwussler@freenet.de",true,((TelephonyManager)getSystemService(TELEPHONY_SERVICE)).getSimSerialNumber());
 		return user;
 	}
   
-	/**
-	 * @return the myDB
-	 */
-	static public DatabaseOnBoard getMyDB() {
-		return myDB;
-	}
-
-	/**
-	 * @param myDB the myDB to set
-	 */
-	public void setMyDB(DatabaseOnBoard myDB) {
-		this.myDB = myDB;
-	}
 
 	/**
 	 * @return the user
@@ -97,27 +114,9 @@ public class App extends Application
 		this.user = user;
 	}
 	
-	public static boolean checkUser()
-	{
-	//	String aktuelleSim=((TelephonyManager)getSystemService(TELEPHONY_SERVICE)).getSimSerialNumber();
-<<<<<<< HEAD
-		Log.d("CheckUser",String.valueOf(getUser().getName()));
-=======
->>>>>>> Michael
-	//	myDB.speichern(getUser());
-	//	myDB.ladeUserProfile();	
-	//	if((aktuelleSim.equals(user.getSim()))&&(user.isVerified()==true))
-			{
-
-			return true;
-			}
-	//	else {
-	//		return false;
-	//	}
-	}
 
 	public boolean verifyUser(User usertemp) {
-		// TODO HIER DIE VERTIFIKATION DES USERS
+		usertemp.setVerified(true);	
 		return true;
 	}
 

@@ -29,6 +29,8 @@ public class DatabaseHandlerProfile extends SQLiteOpenHelper {
     // Database Name
     private static final String DATABASE_NAME = "challange";	 
     private static final String TABLE_PROFILES = "profile";
+    private static final String TABLE_USERS = "user";
+
    
     private static final String KEY_ID = "id";
     private static final String KEY_NAME = "name";
@@ -54,6 +56,15 @@ public class DatabaseHandlerProfile extends SQLiteOpenHelper {
 		  +KEY_TELEFONNUMMER+ " TEXT, "
 		  +KEY_EMAIL+ " TEXT, "
 		  +KEY_REGISTERED+ " TEXT)");
+		  
+		  db.execSQL("CREATE TABLE "+TABLE_USERS+" ("+KEY_ID+ " INTEGER PRIMARY KEY , "
+		  +KEY_NAME+ " TEXT, " 
+		  +KEY_TELEFONNUMMER+ " TEXT, "
+		  +KEY_EMAIL+ " TEXT, "
+		  +KEY_VERIFIED+ " TEXT, "
+		  +KEY_REGISTERED+ " TEXT, "
+		  +KEY_SIM+ " TEXT)");
+		  Log.d("CREATE ON TABLE", "BLA");
 		  
 		 }
 

@@ -6,31 +6,20 @@ import java.util.Date;
 
 public class Challenge 
 {
-<<<<<<< HEAD
+
 	private int id; 
-	private String title;
-	private String description;
-	private String proof;
-	private Profile receiver;
-	private Profile sender;
-=======
 	private String title="Title";
 	private String description="Description";
 	private String proof="Proof";
 	private Profile receiver;
 	private Profile sender;
->>>>>>> Michael
+
 	private boolean channelChallenge;
 	private Status status;
 	private Date timestamp; 
 	private File file;
 	
-<<<<<<< HEAD
 
-	public Challenge(String title, String description, Profile receiver, Profile sender, String proof, Status status)
-
-=======
-	
 	
 	public String getTitle() {
 		return title;
@@ -104,12 +93,8 @@ public class Challenge
 		this.file = file;
 	}
 
-
-	
-
 	
 	public Challenge(String title, String description, Profile receiver, Profile sender, String proof, Status status)
->>>>>>> Michael
 	{
 		this.title=title;
 		this.description=description;

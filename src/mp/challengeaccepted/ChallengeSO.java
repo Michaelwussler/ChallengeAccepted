@@ -1,9 +1,7 @@
 package mp.challengeaccepted;
 
-<<<<<<< HEAD
-=======
+
 import java.util.ArrayList;
->>>>>>> Michael
 
 import android.os.Bundle;
 import android.app.Activity;
@@ -39,13 +37,10 @@ public class ChallengeSO extends Activity {
         //ArrayList<Profile> receiver=(ArrayList<Profile>) savedInstanceState.get("Receiver");       
         Log.d("Receiver",String.valueOf(((App)getApplication()).getErstellteChallenge().getReceiver().getName()));
         setContentView(R.layout.activity_challenge_so);
-<<<<<<< HEAD
-
-=======
         
         TextView textReceiver=(TextView)findViewById(R.id.textViewReceiver);
         textReceiver.setText(((App)getApplication()).getErstellteChallenge().getReceiver().getName());
->>>>>>> Michael
+
         LLTitle=(LinearLayout)findViewById(R.id.LLTitle);
         LLTitle.setOnClickListener(new OnClickListener() {
 			
@@ -75,10 +70,8 @@ public class ChallengeSO extends Activity {
         buttonSend.setOnClickListener(new OnClickListener() {
 			 
 			public void onClick(View arg0) {
-<<<<<<< HEAD
+
 				Challenge temp=new Challenge(getChallengeTitle(), getDescription(), getReceiver(), getSender(), getProof(), getChallengeStatus());
-=======
->>>>>>> Michael
 				// DIE CHALLENGE VERSENDEN
 				// DIE CHALLENGE ABSPEICHERN
 				
@@ -166,6 +159,7 @@ public class ChallengeSO extends Activity {
 			eingabe.setText(((App)getApplication()).getErstellteChallenge().getDescription());
 
 			Button buttonSave = (Button) dialog.findViewById(R.id.buttonOkay);
+			
 			buttonSave.setOnClickListener(new OnClickListener() {
 				
 				public void onClick(View v) {
@@ -174,21 +168,8 @@ public class ChallengeSO extends Activity {
 				}
 			});
 			dialog.setTitle("Edit description");
-<<<<<<< HEAD
-			dialog.setOnDismissListener(new OnDismissListener(){
-=======
-			/*
-			 * dialog.setOnDismissListener(new OnDismissListener() {
-			 
->>>>>>> Michael
-				
-				public void onDismiss(DialogInterface dialog) 
-				{
-					((TextView)LLDescription.getChildAt(1)).setText(eingabe.getText().toString());
-				}
-			});
-			*/
 		}
+			
 		
 		if(id==3)
 		{

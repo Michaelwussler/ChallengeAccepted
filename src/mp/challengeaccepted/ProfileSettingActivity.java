@@ -33,7 +33,6 @@ public class ProfileSettingActivity extends Activity {
 
 	@Override
 	protected void onPause() {
-		((App) getApplication()).checkUser();
 		super.onPause();
 	}
     
