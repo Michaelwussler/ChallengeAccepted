@@ -16,7 +16,7 @@ public class Profile
 	private String phoneNumber = "";
 	private int id = -1;  // soll bei der Registrierung von dem Server zurückgegebne werden (MUSS NOCH GEMACHT WERDEN!)
 	private String email;
-	private boolean verified=false;
+	private boolean verified;//=false;
 	private boolean registered =false; // gibt an, ob das Profil auf dem Server existiert
 
 
@@ -50,28 +50,12 @@ public class Profile
 	/**
 	 * @param string the phoneNumber to set
 	 */
-	public void setPhoneNumber(String string) {	//TODO vorwahl vom jeweiligen Land vor die NUmmer setzen...!
-
-		Log.i("nicht formatierte NUmmer", string);
-		
-			PhoneNumberUtil phoneUtil = PhoneNumberUtil.getInstance();
-			try {
-				PhoneNumber standardtisierteNummer = phoneUtil.parse(string, "DE");
-				Log.i("formatierte NUmmer", standardtisierteNummer.toString());
-				String a = standardtisierteNummer.toString().substring(14);
-				Log.i("a", a);
-				String b = a.substring(0,a.indexOf(" "));
-				Log.i("b", b);
-				String c = a.substring(a.lastIndexOf(" ")+1);
-				Log.i("c", c);
-				String d = b+c;
-				Log.i("d", d);
-				this.phoneNumber = d;
-			} catch (NumberParseException e) {
-			  System.err.println("NumberParseException was thrown: " + e.toString());
-			}
-
+	public void setPhoneNumber(String string) {	
+		this.phoneNumber = string;
 	}
+	
+
+	
 	/**
 	 * @return the id
 	 */

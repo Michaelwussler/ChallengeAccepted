@@ -99,13 +99,19 @@ public class DatabaseHandlerUser extends SQLiteOpenHelper {
 	
     public User getUser(){
         SQLiteDatabase db = this.getReadableDatabase();
-
-        User tmpuser = null;
+        User tmpuser;
 		Cursor c = db.query(TABLE_USERS, null,null, null, null, null, null);
 		c.moveToFirst();
 		
 		if(c.getCount()!=0){
-			tmpuser = new User(c.getString(1), c.getString(2), c.getString(3));
+			tmpuser = new User();
+			tmpuser.setName(c.getString(1));
+			tmpuser.setPhoneNumber(c.getString(2));
+			tmpuser.setEmail(c.getString(3));
+			tmpuser.setVerified(Boolean.valueOf(c.getString(4)));
+			tmpuser.setSim(c.getString(6));
+
+			
 			Log.d("ID",String.valueOf(c.getInt(0)));
 			Log.d("Name",c.getString(1));
 			Log.d("Nummer",c.getString(2));
@@ -119,7 +125,9 @@ public class DatabaseHandlerUser extends SQLiteOpenHelper {
 		}
 		c.close();
 		db.close();
-		return tmpuser;
+		
+		User user = tmpuser;
+		return user;
     }
     
     // User loeschen
@@ -153,6 +161,15 @@ public class DatabaseHandlerUser extends SQLiteOpenHelper {
     db.update(TABLE_USERS, values, null, null);
     
     db.close();
+    }
+    
+    
+    //getPath()
+    public String getPath(){
+        SQLiteDatabase db=this.getWritableDatabase();
+        String path = db.getPath();
+        db.close();
+        return path;
     }
 //    
 //    // Neues Profil erstellen

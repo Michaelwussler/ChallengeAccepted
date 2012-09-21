@@ -13,12 +13,14 @@ public class User extends Profile
 	{
 	}
 	
-	public User(String name, String email, String telefonnummer)
+	public User(String name, String email, String telefonnummer, Boolean verifiziert, String sim)
 	{
 		this.setName(name);
 		this.setEmail(email);
 		this.setPhoneNumber(telefonnummer);
-		this.setId(17);
+		this.setVerified(verifiziert);
+		Log.i("HIER VERIFIZIERT????", Boolean.toString(verifiziert));
+		this.setSim(sim);
 	}
 	
 	
@@ -61,7 +63,6 @@ public class User extends Profile
 		this.sim = sim;
 	}
 	
-
 
 
 

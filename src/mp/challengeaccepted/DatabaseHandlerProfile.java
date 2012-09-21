@@ -127,19 +127,19 @@ public class DatabaseHandlerProfile extends SQLiteOpenHelper {
     
   //überprüft ob es dazu einen eintrag in der DB gibt (um doppelbelegungen zu verhindern) -->>>> Sollte auch noch beim USER eingefügt werde!!!!
     public boolean exist(Profile profile){
-    	boolean tmp = false;
+
+    	boolean var = false;
     	SQLiteDatabase db = this.getWritableDatabase();
-    	
     	Cursor c = db.query(TABLE_PROFILES,new String[] { KEY_ID, KEY_NAME, KEY_TELEFONNUMMER, KEY_EMAIL, KEY_REGISTERED}, KEY_TELEFONNUMMER + "=?",
                 new String[] { profile.getPhoneNumber() }, null, null, null, null);
     	c.moveToFirst();		
     	if(c.getCount()!=0){
-	      	if(c.getString(2) == profile.getPhoneNumber()){	
-	      		tmp =true;
-	      	}
+	      	if(c.getString(2).equalsIgnoreCase(profile.getPhoneNumber())){	
+	      		 var =true;
+	     	}
     	}
       	db.close();
-    	return tmp;
+    	return var;
     }
     
     
@@ -161,8 +161,8 @@ public class DatabaseHandlerProfile extends SQLiteOpenHelper {
         		Profile tmpProfile = new Profile();
         		tmpProfile.setId(c.getInt(0));
         		tmpProfile.setName(c.getString(1));
-        		tmpProfile.setEmail(c.getString(2));
-        		tmpProfile.setPhoneNumber(c.getString(3));
+        		tmpProfile.setPhoneNumber(c.getString(2));
+        		tmpProfile.setEmail(c.getString(3));
         		tmpProfile.setRegistered(true);
     			tmp.add(tmpProfile);
     			c.moveToNext();
@@ -187,6 +187,7 @@ public class DatabaseHandlerProfile extends SQLiteOpenHelper {
     	if(c.getCount()==0){
     		Log.i("AUSGABE", "Es existieren keine registrierten Profile");
     	}
+    	
     	else{
     		
     		for(int i=0; i< c.getCount(); i++){
@@ -196,7 +197,7 @@ public class DatabaseHandlerProfile extends SQLiteOpenHelper {
         		tmpProfile.setName(c.getString(1));
         		tmpProfile.setPhoneNumber(c.getString(2));
         		tmpProfile.setEmail(c.getString(3));
-        		tmpProfile.setRegistered(true);
+        		tmpProfile.setRegistered(false);
     			tmp.add(tmpProfile);
     			c.moveToNext();
         	}

@@ -27,7 +27,7 @@ import android.widget.LinearLayout;
 import android.widget.SimpleAdapter;
 import android.support.v4.app.NavUtils;
 
-
+//TODO hier mŸssen noch die User aus der Datenbank eingetragen werden mit getRegistered.... --> siehe: PopulatePeopleList() 
     
     public class ChoseContact extends Activity { 
     	 
