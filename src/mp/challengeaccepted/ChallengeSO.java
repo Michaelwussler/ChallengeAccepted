@@ -9,6 +9,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnDismissListener;
+import android.content.Intent;
 import android.text.InputFilter;
 
 import android.util.Log;
@@ -72,8 +73,26 @@ public class ChallengeSO extends Activity {
 			 
 			public void onClick(View arg0) {
 
-				Challenge temp=new Challenge(getChallengeTitle(), getDescription(), getReceiver(), ((App)getApplication()).getUser(), getProof(), Challenge.New);
-				((App)getApplication()).editChallenge(temp);
+				if(((TextView)findViewById(R.id.textViewTitle)).getText().equals("Edit title")==true)
+				{showDialog(1);}
+				else{
+					if(((TextView)findViewById(R.id.textViewDescription)).getText().equals("Edit description")==true)
+					{
+					showDialog(2);
+					}
+					else{
+						if(((TextView)findViewById(R.id.textViewProof)).getText().equals("Edit proof")==true)
+						{
+							showDialog(3);
+						}
+						else{
+							Challenge temp=new Challenge(getChallengeTitle(), getDescription(), getReceiver(), ((App)getApplication()).getUser(), getProof(), Challenge.New);
+							((App)getApplication()).editChallenge(temp);
+							startActivity(new Intent(getApplicationContext(), StartActivity.class));
+						}
+					}
+				}
+	
 				// DIE CHALLENGE VERSENDEN
 				// DIE CHALLENGE ABSPEICHERN
 				

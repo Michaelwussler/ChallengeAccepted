@@ -47,21 +47,82 @@ import mp.challengeaccepted.ChildThread;
 public class StartActivity extends Activity 
 {
 	private static final String TAG = "ThreadMessaging";
+	private static TextView Title = null;
+	private static TextView Sender = null;
 	private Handler mMainHandler;
-    
+    private int challengeIndex=0;
+	
 	Button buttonChallengeSo;
 	Button buttonMyChallenges;
 	Button buttonChannels;
 	
+	
 	ArrayList<Challenge> neueChallenges=new ArrayList<Challenge>();
 	ArrayList<Challenge> akzeptierteChallenges=new ArrayList<Challenge>();
+	private ImageView buttonLinks;
+	private ArrayList<Challenge> challenges;
+	private ImageView buttonRechts;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
+    	challenges=((App)getApplication()).getChallengeForMe();
+
         setContentView(R.layout.activity_start); 
- 
+        Title=(TextView)findViewById(R.id.textViewTitle);
+        Sender=(TextView)findViewById(R.id.textViewChallenger);
+        
+        
+        
+        if(challenges.size()>0)
+        {
+        	Title.setText(challenges.get(0).getTitle());
+        	Sender.setText(challenges.get(0).getSender().getName());
+        	//Anzahl.setText(String.valueOf(challengeIndex+1)+"/"+String.valueOf(challenges.size()));
+        }
+        
+        
+        
+        buttonLinks=(ImageView)findViewById(R.id.imageViewLinks);
+        buttonRechts=(ImageView)findViewById(R.id.imageViewRechts);
+        
+        buttonLinks.setOnClickListener(new OnClickListener() {
+    		
+    		public void onClick(View v) {
+    			if(challenges.size()!=0)
+    			{
+    			if(challengeIndex==0)
+    				{challengeIndex=challenges.size()-1;}
+    			else{challengeIndex-=1;}
+    			Title.setText(challenges.get(challengeIndex).getTitle());
+            //	Description.setText(challenges.get(challengeIndex).getDescription());
+            //	Proof.setText(challenges.get(challengeIndex).getProof());
+            //	Receiver.setText(challenges.get(challengeIndex).getReceiver().getName());
+            	Sender.setText(challenges.get(challengeIndex).getSender().getName());
+            //	Anzahl.setText(String.valueOf(challengeIndex+1)+"/"+String.valueOf(challenges.size()));
+    		}}
+    	});
+           
+           
+           buttonRechts.setOnClickListener(new OnClickListener() {
+       		
+    		public void onClick(View v) {
+    			if(challenges.size()!=0)
+    			{
+    			if(challengeIndex==challenges.size()-1)
+    				{challengeIndex=0;}
+    			else{challengeIndex+=1;}
+    			Title.setText(challenges.get(challengeIndex).getTitle());
+            	//Description.setText(challenges.get(challengeIndex).getDescription());
+            	//Proof.setText(challenges.get(challengeIndex).getProof());
+            	//Receiver.setText(challenges.get(challengeIndex).getReceiver().getName());
+            	Sender.setText(challenges.get(challengeIndex).getSender().getName());
+            	//Anzahl.setText(String.valueOf(challengeIndex+1)+"/"+String.valueOf(challenges.size()));
+    		}
+    		}
+    	});
+           
+        
         Log.d("Start","OnCreateStartActivity");
 
         if((((App) getApplication()).getUser().isVerified()==false||((App)getApplication()).getUser().getSim().equals(((TelephonyManager)getSystemService(TELEPHONY_SERVICE)).getSimSerialNumber())==false))
@@ -88,6 +149,8 @@ public class StartActivity extends Activity
 		});
         buttonChannels=(Button) findViewById(R.id.buttonChannels);
 
+        buttonLinks=(ImageView)findViewById(R.id.imageViewLinks);
+       
     } 
 
     @Override
@@ -190,7 +253,18 @@ public class StartActivity extends Activity
 		super.onBackPressed();
 	}
     
-   
+    public void redraw()
+    {
+    	challenges=((App)getApplication()).getChallengeForMe();
+    	if(challenges.size()>0)
+        {
+        	Title.setText(challenges.get(0).getTitle());
+        	//Description.setText(challenges.get(0).getDescription());
+        	//Proof.setText(challenges.get(0).getProof());
+        	//Receiver.setText(challenges.get(0).getReceiver().getName());
+        	Sender.setText(challenges.get(0).getSender().getName());
+        }
+    }
     
     
 }

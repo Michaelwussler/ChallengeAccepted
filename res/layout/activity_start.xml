@@ -4,7 +4,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical" >
-
+
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" >
@@ -19,22 +19,23 @@
             android:src="@drawable/accepted" />
 
         <ImageView
-            android:id="@+id/imageView3"
+            android:id="@+id/imageViewLinks"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:src="@android:drawable/ic_media_rew" />
+
+        <ImageView
+            android:id="@+id/imageViewRechts"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:src="@android:drawable/ic_media_ff" />
 
-        <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@+id/imageView3"
-            android:src="@android:drawable/ic_media_rew" />
     </RelativeLayout>
-
+
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" >
@@ -70,14 +71,15 @@
             android:layout_above="@+id/buttonMyChallenges"
             android:layout_alignParentLeft="true"
             android:text="Challenge someone" />
-
+
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/textViewChallenger"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:layout_marginTop="20dp"
+            android:gravity="center"
             android:text="Michael Wußler" />
 
         <TextView
@@ -85,14 +87,14 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_below="@+id/textView2"
+            android:layout_below="@+id/textViewChallenger"
             android:background="@color/Grau"
             android:gravity="center"
             android:text="Challenge:"
             android:textColor="@color/Rot" />
-
+
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/textViewTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
@@ -104,7 +106,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_below="@+id/textView4"
+            android:layout_alignTop="@+id/textViewTitle"
             android:scaleType="centerInside"
             android:src="@android:drawable/ic_dialog_info" />
 

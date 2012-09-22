@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -25,6 +26,7 @@ public class ArchivAcceptedActivity extends Activity {
 	private ImageView buttonLinks;
 	private ImageView buttonRechts;
 	private int challengeIndex=0;
+	private Button buttonProof;
 	
 	
     @Override
@@ -38,12 +40,22 @@ public class ArchivAcceptedActivity extends Activity {
        Receiver=(TextView)findViewById(R.id.textViewReceiver);
        Sender=(TextView)findViewById(R.id.TextViewSender);
        Anzahl=(TextView)findViewById(R.id.textViewAnzahl);
+       buttonProof=(Button)findViewById(R.id.buttonAddProof);
+       buttonProof.setOnClickListener(new OnClickListener() {
+		
+		public void onClick(View v) {
+			// TODO Auto-generated method stub
+			
+		}
+	});
        buttonLinks=(ImageView)findViewById(R.id.imageViewLinks);
        buttonRechts=(ImageView)findViewById(R.id.imageViewRechts);
        
        buttonLinks.setOnClickListener(new OnClickListener() {
    		
    		public void onClick(View v) {
+   			if(challenges.size()!=0)
+   			{
    			if(challengeIndex==0)
    				{challengeIndex=challenges.size()-1;}
    			else{challengeIndex-=1;}
@@ -53,6 +65,7 @@ public class ArchivAcceptedActivity extends Activity {
            	Receiver.setText(challenges.get(challengeIndex).getReceiver().getName());
            	Sender.setText(challenges.get(challengeIndex).getSender().getName());
            	Anzahl.setText(String.valueOf(challengeIndex+1)+"/"+String.valueOf(challenges.size()));
+   			}
    		}
    	});
           
@@ -60,6 +73,8 @@ public class ArchivAcceptedActivity extends Activity {
           buttonRechts.setOnClickListener(new OnClickListener() {
       		
    		public void onClick(View v) {
+   			if(challenges.size()!=0)
+   			{
    			if(challengeIndex==challenges.size()-1)
    				{challengeIndex=0;}
    			else{challengeIndex+=1;}
@@ -69,6 +84,7 @@ public class ArchivAcceptedActivity extends Activity {
            	Receiver.setText(challenges.get(challengeIndex).getReceiver().getName());
            	Sender.setText(challenges.get(challengeIndex).getSender().getName());
            	Anzahl.setText(String.valueOf(challengeIndex+1)+"/"+String.valueOf(challenges.size()));
+   		}
    		}
    	});
           

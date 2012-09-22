@@ -21,10 +21,10 @@
             android:text="Title" />
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/textViewTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Edit Title" />
+            android:text="Edit title" />
 
     </LinearLayout>
 
@@ -43,10 +43,10 @@
             android:text="Description" />
 
         <TextView
-            android:id="@+id/textView5"
+            android:id="@+id/textViewDescription"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Edit descrpition" />
+            android:text="Edit description" />
 
     </LinearLayout>
 
@@ -65,10 +65,10 @@
             android:text="Proof" />
 
         <TextView
-            android:id="@+id/textView6"
+            android:id="@+id/textViewProof"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Edit Proof" />
+            android:text="Edit proof" />
 
     </LinearLayout>
 

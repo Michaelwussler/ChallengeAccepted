@@ -268,6 +268,25 @@ public class App extends Application
 		return temp;
 		
 	}
+
+	public ArrayList<Challenge> getChallengeForMe() {
+		// TASK PETER HIER ALLE CHALLENGES ZUR‹CKGEBEN, DIE MICH ALS RECEIVER HABEN
+		ArrayList<Challenge> temp=new ArrayList<Challenge>();
+		
+		temp.add(new Challenge("New", "ich bin Receiver", (Profile)getUser(), getProfiles().get(3), "der Beweis", Challenge.New));
+		temp.add(new Challenge("Noch besser", "ich bin Receiver", (Profile)getUser(), getProfiles().get(3), "der Beweis", Challenge.New));
+		temp.add(new Challenge("Voll gut", "ich bin Receiver", (Profile)getUser(), getProfiles().get(3), "der Beweis", Challenge.New));
+		temp.add(new Challenge("Dummer Scheiﬂ", "ich bin Receiver", (Profile)getUser(), getProfiles().get(3), "der Beweis", Challenge.New));
+
+		return temp;
+		
+	}
+
+	public ArrayList<Profile> getProfilesWithAccount() {
+	//TASK PETER HIER NUR DIE PROFILE MIT ACCOUNT ZUR‹CKGEBEN
+		return getProfiles();
+		
+	}
 	
 
 

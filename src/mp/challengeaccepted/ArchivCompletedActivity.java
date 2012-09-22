@@ -42,6 +42,8 @@ public class ArchivCompletedActivity extends Activity {
        buttonLinks.setOnClickListener(new OnClickListener() {
    		
    		public void onClick(View v) {
+   			if(challenges.size()!=0)
+   			{
    			if(challengeIndex==0)
    				{challengeIndex=challenges.size()-1;}
    			else{challengeIndex-=1;}
@@ -51,6 +53,8 @@ public class ArchivCompletedActivity extends Activity {
            	Receiver.setText(challenges.get(challengeIndex).getReceiver().getName());
            	Sender.setText(challenges.get(challengeIndex).getSender().getName());
            	Anzahl.setText(String.valueOf(challengeIndex+1)+"/"+String.valueOf(challenges.size()));
+   			}
+   			
    		}
    	});
           
@@ -58,6 +62,8 @@ public class ArchivCompletedActivity extends Activity {
           buttonRechts.setOnClickListener(new OnClickListener() {
       		
    		public void onClick(View v) {
+   			if(challenges.size()!=0)
+   			{
    			if(challengeIndex==challenges.size()-1)
    				{challengeIndex=0;}
    			else{challengeIndex+=1;}
@@ -67,6 +73,7 @@ public class ArchivCompletedActivity extends Activity {
            	Receiver.setText(challenges.get(challengeIndex).getReceiver().getName());
            	Sender.setText(challenges.get(challengeIndex).getSender().getName());
            	Anzahl.setText(String.valueOf(challengeIndex+1)+"/"+String.valueOf(challenges.size()));
+   			}
    		}
    	});
           

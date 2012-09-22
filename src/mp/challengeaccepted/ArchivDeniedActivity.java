@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.support.v4.app.NavUtils;
@@ -24,6 +25,7 @@ public class ArchivDeniedActivity extends Activity {
 	private ImageView buttonLinks;
 	private ImageView buttonRechts;
 	private int challengeIndex=0;
+	private Button buttonAccept;
 
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -36,11 +38,28 @@ public class ArchivDeniedActivity extends Activity {
        Receiver=(TextView)findViewById(R.id.textViewReceiver);
        Sender=(TextView)findViewById(R.id.TextViewSender);
        Anzahl=(TextView)findViewById(R.id.textViewAnzahl);
+       
+       buttonAccept=(Button)findViewById(R.id.buttonAccept);
+       buttonAccept.setOnClickListener(new OnClickListener() {
+		
+		public void onClick(View v) {
+			Challenge temp=challenges.get(challengeIndex);
+			temp.setStatus(Challenge.Accepted);
+			((App)getApplication()).editChallenge(temp);
+			redraw();
+		}
+	});
+       
        buttonLinks=(ImageView)findViewById(R.id.imageViewLinks);
        buttonRechts=(ImageView)findViewById(R.id.imageViewRechts);
        buttonLinks.setOnClickListener(new OnClickListener() {
-   		
+   	
+    	   
+    	   
+    	   
    		public void onClick(View v) {
+   			if(challenges.size()!=0)
+   			{
    			if(challengeIndex==0)
    				{challengeIndex=challenges.size()-1;}
    			else{challengeIndex-=1;}
@@ -50,13 +69,16 @@ public class ArchivDeniedActivity extends Activity {
            	Receiver.setText(challenges.get(challengeIndex).getReceiver().getName());
            	Sender.setText(challenges.get(challengeIndex).getSender().getName());
            	Anzahl.setText(String.valueOf(challengeIndex+1)+"/"+String.valueOf(challenges.size()));
-   		}
+   		}}
+   		
    	});
           
           
           buttonRechts.setOnClickListener(new OnClickListener() {
       		
    		public void onClick(View v) {
+   			if(challenges.size()!=0)
+   			{
    			if(challengeIndex==challenges.size()-1)
    				{challengeIndex=0;}
    			else{challengeIndex+=1;}
@@ -66,7 +88,7 @@ public class ArchivDeniedActivity extends Activity {
            	Receiver.setText(challenges.get(challengeIndex).getReceiver().getName());
            	Sender.setText(challenges.get(challengeIndex).getSender().getName());
            	Anzahl.setText(String.valueOf(challengeIndex+1)+"/"+String.valueOf(challenges.size()));
-   		}
+   		}}
    	});
        
        

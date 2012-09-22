@@ -81,7 +81,7 @@ import android.support.v4.app.NavUtils;
             
             LinearLayout layoutScroll=(LinearLayout)findViewById(R.id.LayoutScrollView);
 
-    	    for(final Profile n:((App)getApplication()).getProfiles())
+    	    for(final Profile n:((App)getApplication()).getProfilesWithAccount())
     	    {
     	    	 Button temp=new Button(this);
     	    	    temp.setText(n.getName());
