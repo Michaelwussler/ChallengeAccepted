@@ -13,12 +13,19 @@ public class Challenge
 	private String proof="Proof";
 	private Profile receiver;
 	private Profile sender;
-
+	private int status;
 	private boolean channelChallenge;
-	private Status status;
+	
 	private Date timestamp; 
 	private File file;
 	
+	
+	public final static int New=1;
+	public final static int Accepted=2;
+	public final static int Denied=3;
+	public final static int Completed=4;
+	public final static int ProofConfirmation=5;
+	public final static int ProofDenied=6;
 
 	
 	public String getTitle() {
@@ -69,11 +76,11 @@ public class Challenge
 		this.channelChallenge = channelChallenge;
 	}
 
-	public Status getStatus() {
+	public int getStatus() {
 		return status;
 	}
 
-	public void setStatus(Status status) {
+	public void setStatus(int status) {
 		this.status = status;
 	}
 
@@ -94,7 +101,7 @@ public class Challenge
 	}
 
 	
-	public Challenge(String title, String description, Profile receiver, Profile sender, String proof, Status status)
+	public Challenge(String title, String description, Profile receiver, Profile sender, String proof, int status)
 	{
 		this.title=title;
 		this.description=description;
@@ -120,7 +127,7 @@ public class Challenge
 		{return 4;}
 		if(proof==null)
 		{return 5;}
-		if(status==null)
+		if(status==-1)
 		{return 6;}
 		if(timestamp==null)
 		{return 7;}

@@ -80,8 +80,8 @@ import android.support.v4.app.NavUtils;
     	    
             
             LinearLayout layoutScroll=(LinearLayout)findViewById(R.id.LayoutScrollView);
-    	    ArrayList<Profile> contacts=((App)getApplication()).loadContacts();
-    	    for(final Profile n:contacts)
+
+    	    for(final Profile n:((App)getApplication()).getProfiles())
     	    {
     	    	 Button temp=new Button(this);
     	    	    temp.setText(n.getName());
@@ -98,16 +98,27 @@ import android.support.v4.app.NavUtils;
     	} 
     	 
     	public void PopulatePeopleList() { 
-    	    mPeopleList.clear(); 
+    	    mPeopleList.clear();
+    	    
+    	    for(Profile n:((App)getApplication()).getProfiles())
+    	    {
+                Map<String, String> NamePhoneType = new HashMap<String, String>(); 
+                NamePhoneType.put("Name", n.getName()); 
+                Log.d("Name",n.getName());
+                NamePhoneType.put("Phone", n.getPhoneNumber()); 
+                NamePhoneType.put("Type",  "Mobile"); 
+                mPeopleList.add(NamePhoneType); 
+    	    }
+    	    
+    	    /*
     	    Cursor people = getContentResolver().query(ContactsContract.Contacts.CONTENT_URI, null, null, null, null); 
     	    while (people.moveToNext()) { 
     	        String contactName = people.getString(people 
     	                .getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME)); 
     	        String contactId = people.getString(people 
     	                .getColumnIndex(ContactsContract.Contacts._ID)); 
-    	        String hasPhone = people 
-    	                .getString(people 
-    	                        .getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER)); 
+    	        String hasPhone = people.getString(people 
+    	                .getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER)); 
     	 
     	        if ((Integer.parseInt(hasPhone) > 0)){ 
     	            // You know have the number so now query it like this 
@@ -139,6 +150,7 @@ import android.support.v4.app.NavUtils;
     	    } 
     	    people.close(); 
     	    startManagingCursor(people); 
+    	    */
     	} 
     	 
     	public void onItemClick(AdapterView<?> av, View v, int index, long arg){ 

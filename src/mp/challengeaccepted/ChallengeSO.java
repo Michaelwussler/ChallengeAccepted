@@ -67,31 +67,25 @@ public class ChallengeSO extends Activity {
         checkBoxShare=(CheckBox)findViewById(R.id.checkBoxShare);
         
         buttonSend = (Button) findViewById(R.id.buttonSend);
+        buttonSend.setText("Challenge " + ((App)getApplication()).getErstellteChallenge().getReceiver().getName());
         buttonSend.setOnClickListener(new OnClickListener() {
 			 
 			public void onClick(View arg0) {
 
-				Challenge temp=new Challenge(getChallengeTitle(), getDescription(), getReceiver(), getSender(), getProof(), getChallengeStatus());
+				Challenge temp=new Challenge(getChallengeTitle(), getDescription(), getReceiver(), ((App)getApplication()).getUser(), getProof(), Challenge.New);
+				((App)getApplication()).editChallenge(temp);
 				// DIE CHALLENGE VERSENDEN
 				// DIE CHALLENGE ABSPEICHERN
 				
 				
 			}
 
-			private Status getChallengeStatus() {
-				// TODO Auto-generated method stub
-				return null;
-			}
 
 			private String getProof() {
 				// TODO Auto-generated method stub
 				return null;
 			}
 
-			private Profile getSender() {
-				// TODO Auto-generated method stub
-				return null;
-			}
 
 			private Profile getReceiver() {
 				// TODO Auto-generated method stub

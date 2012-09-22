@@ -22,12 +22,13 @@ import android.provider.ContactsContract;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.telephony.TelephonyManager;
 import android.util.Log;
+import android.widget.Toast;
 
 public class App extends Application 
 {
 
 	private static User user=new User();
-	private ArrayList<Profile> contacts=new ArrayList<Profile>();
+	private ArrayList<Profile> profiles=new ArrayList<Profile>();
 	private ArrayList<Challenge> challenges=new ArrayList<Challenge>();
 	private Challenge erstellteChallenge=new Challenge();
 
@@ -35,7 +36,7 @@ public class App extends Application
 	public ArrayList<Challenge> getChallenges() {
 		return challenges;
 	}
-
+ 
 	public void setChallenges(ArrayList<Challenge> challenges) {
 		this.challenges = challenges;
 	}
@@ -54,20 +55,28 @@ public class App extends Application
 		if((user.isVerified()==true)&&(user.getSim().equals(((TelephonyManager)getSystemService(TELEPHONY_SERVICE)).getSimSerialNumber())))
 		{	
 			
-			ladeProfile(); //muss an einen Service ausgelagert werden
-			challenges=ladeChallenges(); // muss auch an einen Service ausgelagert werden
+			Thread t1=new Thread(new Runnable() {
+				
+				public void run() {
+					// TODO Auto-generated method stub
+					setProfiles(ladeProfile());
+					challenges=ladeChallenges(); // muss auch an einen Service ausgelagert werden
+
+				}
+			});
+			t1.run();
 		}
 
 		super.onCreate();
 	}
 
-	private ArrayList<Challenge> ladeChallenges() {
+	ArrayList<Challenge> ladeChallenges() {
 		return challenges;
 		// TODO Auto-generated method stub
 		
 	}
 
-	public void ladeProfile() {		
+	public ArrayList<Profile> ladeProfile() {		
 	
 		ArrayList<Profile> arg = new ArrayList<Profile>();
 		
@@ -105,6 +114,7 @@ public class App extends Application
         
         
     }
+		return arg;
     
     }
 		
@@ -138,27 +148,7 @@ public class App extends Application
 		return true;
 	}
 
-	public ArrayList<Profile> loadContacts() {
-		ArrayList<Profile> ausgabe=new ArrayList<Profile>();
-		ausgabe.add(new Profile("Peter"));
-		ausgabe.add(new Profile("Michael"));
-		ausgabe.add(new Profile("Anna"));
-		ausgabe.add(new Profile("Karina"));
-		ausgabe.add(new Profile("Peter"));
-		ausgabe.add(new Profile("Michael"));
-		ausgabe.add(new Profile("Anna"));
-		ausgabe.add(new Profile("Karina"));
-		ausgabe.add(new Profile("Peter"));
-		ausgabe.add(new Profile("Michael"));
-		ausgabe.add(new Profile("Anna"));
-		ausgabe.add(new Profile("Karina"));
-		ausgabe.add(new Profile("Peter"));
-		ausgabe.add(new Profile("Michael"));
-		ausgabe.add(new Profile("Anna"));
-		ausgabe.add(new Profile("Karina"));
-		
-		return ausgabe;
-	}
+
 
 	/**
 	 * @return the erstellteChallenge
@@ -218,8 +208,66 @@ public class App extends Application
     output.close();
     fis.close();
 }
+
+	/**
+	 * @return the profiles
+	 */
+	public ArrayList<Profile> getProfiles() {
+		return profiles;
+	}
+
+	/**
+	 * @param profiles the profiles to set
+	 */
+	public void setProfiles(ArrayList<Profile> profiles) {
+		this.profiles = profiles;
+	}
+
+	public void editChallenge(Challenge temp) {
+		// TASK PETER DIESE FUNKTION WIRD IMMER AUFGERUFEN WENN EINE CHALLENGE IN IRGENDEINER ART BEARBEITET WIRD, ZUM BEISPIEL BEIM ERSTELLEN; ANNEHMEN; ETC
+		// HIER MUSS DIE CHALLENGE IN DER LOKALEN DATENBANK UND IN DER SERVERDATENBANK ERSTELLT BZW AKTUALISIERT WERDEN
+	}
 	
-	
+	public ArrayList<Challenge> getChallengeWithStatus(int status)
+	{
+		//TASK PETER hier brauche ich eine FUnktion, die mir alle Challenges des entsprechenden status zurückgibt
+		ArrayList<Challenge> temp=new ArrayList<Challenge>();
+		if(status==Challenge.New)
+		{temp.add(new Challenge("New", "das allerneueste", (Profile)getUser(), getProfiles().get(3), "der Beweis", Challenge.New));
+		return temp;
+		}
+		if(status==Challenge.Accepted)
+		{temp.add(new Challenge("Accepted", "das akzeptierte", (Profile)getUser(), getProfiles().get(8), "der Beweis", Challenge.Accepted));
+		return temp;
+		}
+		if(status==Challenge.Denied)
+		{temp.add(new Challenge("Abgelehnt", "das abgelehnte", (Profile)getUser(), getProfiles().get(3), "der Beweis", Challenge.Denied));
+		return temp;
+		}
+		if(status==Challenge.ProofConfirmation)
+		{temp.add(new Challenge("Beweis geschickt", "ich will das bestätigt haben", (Profile)getUser(), getProfiles().get(12), "der Beweis", Challenge.ProofConfirmation));
+		return temp;
+		}
+		if(status==Challenge.ProofDenied)
+		{temp.add(new Challenge("Beweis abgelehnt", "der abgelehnte Beweis", (Profile)getUser(), getProfiles().get(15), "der Beweis", Challenge.ProofDenied));
+		return temp;
+		}
+		if(status==Challenge.Completed)
+		{temp.add(new Challenge("Completed", "Mission complet, extrem viel Text, bhadbdhdbajhdbjkhawbdjhbawbjhbsjh<dbfklhwefhbjhawefgjklawefgvcfhawefljkshaefljkhh jhjh bhb jhbehwjhafb hbeafbjhkawbk bkjhab jhebawfhbjha bjhaw jhba bkjefawbkfjhbawkefhkjaw afbjhew", (Profile)getUser(), getProfiles().get(1), "der Beweis", Challenge.Completed));
+		return temp;
+		}
+		
+		if(status==10)
+		{		
+			temp.add(new Challenge("Beweis abgelehnt", "der abgelehnte Beweis", (Profile)getUser(), getProfiles().get(15), "der Beweis", Challenge.ProofDenied));
+			temp.add(new Challenge("Beweis geschickt", "ich will das bestätigt haben", (Profile)getUser(), getProfiles().get(12), "der Beweis", Challenge.ProofConfirmation));
+			temp.add(new Challenge("Accepted", "das akzeptierte", (Profile)getUser(), getProfiles().get(8), "der Beweis", Challenge.Accepted));
+		}
+		
+		
+		return temp;
+		
+	}
 	
 
 

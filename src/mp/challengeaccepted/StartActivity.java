@@ -137,7 +137,18 @@ public class StartActivity extends Activity
 				Log.i("Hier der Path", dbuser.getPath());
 				dbuser.addUser(usertemp);
 				((App)getApplication()).setUser(usertemp);
-				((App)getApplication()).ladeProfile();
+
+				Thread t1=new Thread(new Runnable() {
+					
+					public void run() {
+						// TODO Auto-generated method stub
+						((App)getApplication()).setProfiles(((App)getApplication()).ladeProfile());
+						((App)getApplication()).setChallenges(((App)getApplication()).ladeChallenges()); // muss auch an einen Service ausgelagert werden
+
+					}
+				});
+				t1.run();
+				
 				dialog.dismiss();
 
 			}
