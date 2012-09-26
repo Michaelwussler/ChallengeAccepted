@@ -57,9 +57,7 @@ public class App extends Application
 		{
 			
 			ladeProfile(); //muss an einen Thread ausgelagert werden 
-			//TODO: areUsers Reparieren!!!!!!!!
-			
-			
+						
 			DatabaseHandlerProfile dbprofile = new DatabaseHandlerProfile(getApplicationContext());
 			ArrayList<Profile> toRegister = ServerDB.areUsers(dbprofile.getAllUnregistered());
 			for(Profile n:toRegister)
@@ -70,33 +68,32 @@ public class App extends Application
 				
 			}
 			
+			setProfiles(dbprofile.getAllRegistered());
 		
-			Profile testprofil1 = new Profile("4915771356010");
-			Profile testprofil2 = new Profile("4915711111111");
+//			Profile testprofil1 = new Profile("4915771356010");
+//			Profile testprofil2 = new Profile("4915711111111");
 
 			
-<<<<<<< HEAD
-			Thread t1=new Thread(new Runnable() {
-				
-				public void run() {
-					// TODO Auto-generated method stub
-					setProfiles(ladeProfile());
-					challenges=ladeChallenges(); // muss auch an einen Service ausgelagert werden
-
-				}
-			});
-			t1.run();
-=======
-			Challenge testchallenge = new Challenge("Peters Aufgabe", "Schreibe den Challenge-DEscriptionText", testprofil2, testprofil1, "Bilderchen", 1);
-			 
-			DatabaseHandlerChallenge dbchallenge = new DatabaseHandlerChallenge(getApplicationContext());
-			testchallenge.setId(dbchallenge.addChallenge(testchallenge)); //beim erstellen wird gleich die ID mit Ÿbergeben!
-			dbchallenge.addProof("Das ist der Proof", testchallenge);
-			dbchallenge.changeStatus(007, testchallenge);
+//TODO
+//			Thread t1=new Thread(new Runnable() {
+//				
+//				public void run() {
+//					// TODO Auto-generated method stub
+//					setProfiles(ladeProfile());
+//					challenges=ladeChallenges(); // muss auch an einen Service ausgelagert werden
+//
+//				}
+//			});
+//			t1.run();
+//			Challenge testchallenge = new Challenge("Peters Aufgabe", "Schreibe den Challenge-DEscriptionText", testprofil2, testprofil1, "Bilderchen", 1);
+//			 
+//			DatabaseHandlerChallenge dbchallenge = new DatabaseHandlerChallenge(getApplicationContext());
+//			testchallenge.setId(dbchallenge.addChallenge(testchallenge)); //beim erstellen wird gleich die ID mit Ÿbergeben!
+//			dbchallenge.addProof("Das ist der Proof", testchallenge);
+//			dbchallenge.changeStatus(007, testchallenge);
 			
 			ServerDB.dropTable(user);
-			 
-			 
+			//TODO getAllChallenges()
 			challenges=ladeChallenges(); // muss auch an einen Thread ausgelagert werden
 			
 			 try {
@@ -105,7 +102,7 @@ public class App extends Application
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
->>>>>>> peter2
+
 		}
 
 		super.onCreate();
@@ -117,7 +114,7 @@ public class App extends Application
 		
 	}
 
-	public ArrayList<Profile> ladeProfile() {		
+	public void ladeProfile() {		
 	
 		ArrayList<Profile> arg = new ArrayList<Profile>();
 		
@@ -152,16 +149,8 @@ public class App extends Application
         for(Profile n:arg){ 
         		dbp.addProfile(n);
         }     
-        
-  //      updateRegisteredUsers();
-        
-<<<<<<< HEAD
-    }
-		return arg;
-    
-=======
+               
         }
->>>>>>> peter2
     }
 		
 	public void updateRegisteredUsers() {
@@ -287,35 +276,35 @@ public class App extends Application
 		//TASK PETER hier brauche ich eine FUnktion, die mir alle Challenges des entsprechenden status zurückgibt
 		ArrayList<Challenge> temp=new ArrayList<Challenge>();
 		if(status==Challenge.New)
-		{temp.add(new Challenge("New", "das allerneueste", (Profile)getUser(), getProfiles().get(3), "der Beweis", Challenge.New));
+		{temp.add(new Challenge("New", "das allerneueste", (Profile)getUser(), getProfiles().get(0), "der Beweis", Challenge.New));
 		return temp;
 		}
 		if(status==Challenge.Accepted)
-		{temp.add(new Challenge("Accepted", "das akzeptierte", (Profile)getUser(), getProfiles().get(8), "der Beweis", Challenge.Accepted));
+		{temp.add(new Challenge("Accepted", "das akzeptierte", (Profile)getUser(), getProfiles().get(0), "der Beweis", Challenge.Accepted));
 		return temp;
 		}
 		if(status==Challenge.Denied)
-		{temp.add(new Challenge("Abgelehnt", "das abgelehnte", (Profile)getUser(), getProfiles().get(3), "der Beweis", Challenge.Denied));
+		{temp.add(new Challenge("Abgelehnt", "das abgelehnte", (Profile)getUser(), getProfiles().get(0), "der Beweis", Challenge.Denied));
 		return temp;
 		}
 		if(status==Challenge.ProofConfirmation)
-		{temp.add(new Challenge("Beweis geschickt", "ich will das bestätigt haben", (Profile)getUser(), getProfiles().get(12), "der Beweis", Challenge.ProofConfirmation));
+		{temp.add(new Challenge("Beweis geschickt", "ich will das bestätigt haben", (Profile)getUser(), getProfiles().get(0), "der Beweis", Challenge.ProofConfirmation));
 		return temp;
 		}
 		if(status==Challenge.ProofDenied)
-		{temp.add(new Challenge("Beweis abgelehnt", "der abgelehnte Beweis", (Profile)getUser(), getProfiles().get(15), "der Beweis", Challenge.ProofDenied));
+		{temp.add(new Challenge("Beweis abgelehnt", "der abgelehnte Beweis", (Profile)getUser(), getProfiles().get(0), "der Beweis", Challenge.ProofDenied));
 		return temp;
 		}
 		if(status==Challenge.Completed)
-		{temp.add(new Challenge("Completed", "Mission complet, extrem viel Text, bhadbdhdbajhdbjkhawbdjhbawbjhbsjh<dbfklhwefhbjhawefgjklawefgvcfhawefljkshaefljkhh jhjh bhb jhbehwjhafb hbeafbjhkawbk bkjhab jhebawfhbjha bjhaw jhba bkjefawbkfjhbawkefhkjaw afbjhew", (Profile)getUser(), getProfiles().get(1), "der Beweis", Challenge.Completed));
+		{temp.add(new Challenge("Completed", "Mission complet, extrem viel Text, bhadbdhdbajhdbjkhawbdjhbawbjhbsjh<dbfklhwefhbjhawefgjklawefgvcfhawefljkshaefljkhh jhjh bhb jhbehwjhafb hbeafbjhkawbk bkjhab jhebawfhbjha bjhaw jhba bkjefawbkfjhbawkefhkjaw afbjhew", (Profile)getUser(), getProfiles().get(0), "der Beweis", Challenge.Completed));
 		return temp;
 		}
 		
 		if(status==10)
 		{		
-			temp.add(new Challenge("Beweis abgelehnt", "der abgelehnte Beweis", (Profile)getUser(), getProfiles().get(15), "der Beweis", Challenge.ProofDenied));
-			temp.add(new Challenge("Beweis geschickt", "ich will das bestätigt haben", (Profile)getUser(), getProfiles().get(12), "der Beweis", Challenge.ProofConfirmation));
-			temp.add(new Challenge("Accepted", "das akzeptierte", (Profile)getUser(), getProfiles().get(8), "der Beweis", Challenge.Accepted));
+			temp.add(new Challenge("Beweis abgelehnt", "der abgelehnte Beweis", (Profile)getUser(), getProfiles().get(0), "der Beweis", Challenge.ProofDenied));
+			temp.add(new Challenge("Beweis geschickt", "ich will das bestätigt haben", (Profile)getUser(), getProfiles().get(0), "der Beweis", Challenge.ProofConfirmation));
+			temp.add(new Challenge("Accepted", "das akzeptierte", (Profile)getUser(), getProfiles().get(0), "der Beweis", Challenge.Accepted));
 		}
 		
 		

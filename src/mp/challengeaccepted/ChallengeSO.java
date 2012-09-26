@@ -80,13 +80,11 @@ public class ChallengeSO extends Activity {
 				
 			}
 
-<<<<<<< HEAD
-=======
+
 			private int getChallengeStatus() {
 				// TODO Auto-generated method stub
 				return 0;
 			}
->>>>>>> peter2
 
 			private String getProof() {
 				// TODO Auto-generated method stub

@@ -133,26 +133,15 @@ public class StartActivity extends Activity
 			usertemp.setSim(((TelephonyManager)getSystemService(TELEPHONY_SERVICE)).getSimSerialNumber());
 			
 			//hier noch if reinmachen, dass er nur gesetzt wird, falls er noch nicht existiert!
-			//if(!(ServerDB.isUser(usertemp))){
-			ServerDB.registerUser(((EditText)dialog.findViewById(R.id.editTextName)).getText().toString(), ((EditText)dialog.findViewById(R.id.editTextEmail)).getText().toString(), ((App)getApplication()).normPhoneNumber(((EditText)dialog.findViewById(R.id.editTextNumber)).getText().toString()));
-			//}
+			if(!(ServerDB.isUser(usertemp))){
+				ServerDB.registerUser(((EditText)dialog.findViewById(R.id.editTextName)).getText().toString(), ((EditText)dialog.findViewById(R.id.editTextEmail)).getText().toString(), ((App)getApplication()).normPhoneNumber(((EditText)dialog.findViewById(R.id.editTextNumber)).getText().toString()));
+			}
 			if(((App)getApplication()).verifyUser(usertemp)==true)
 			{
 				DatabaseHandlerUser dbuser =  new DatabaseHandlerUser(getApplicationContext());
 
 				dbuser.addUser(usertemp);
 				((App)getApplication()).setUser(usertemp);
-
-				Thread t1=new Thread(new Runnable() {
-					
-					public void run() {
-						// TODO Auto-generated method stub
-						((App)getApplication()).setProfiles(((App)getApplication()).ladeProfile());
-						((App)getApplication()).setChallenges(((App)getApplication()).ladeChallenges()); // muss auch an einen Service ausgelagert werden
-
-					}
-				});
-				t1.run();
 				
 				dialog.dismiss();
 				((App)getApplication()).onCreate();
