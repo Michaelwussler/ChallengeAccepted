@@ -68,6 +68,7 @@ public class StartActivity extends Activity
         {	
         	showDialog(1); 
         } 
+       
         	
 
         buttonChallengeSo=(Button) findViewById(R.id.buttonChallengeSO);
@@ -131,20 +132,28 @@ public class StartActivity extends Activity
 			usertemp.setEmail(((EditText)dialog.findViewById(R.id.editTextEmail)).getText().toString());
 			usertemp.setSim(((TelephonyManager)getSystemService(TELEPHONY_SERVICE)).getSimSerialNumber());
 			
+			//hier noch if reinmachen, dass er nur gesetzt wird, falls er noch nicht existiert!
+			//if(!(ServerDB.isUser(usertemp))){
+			ServerDB.registerUser(((EditText)dialog.findViewById(R.id.editTextName)).getText().toString(), ((EditText)dialog.findViewById(R.id.editTextEmail)).getText().toString(), ((App)getApplication()).normPhoneNumber(((EditText)dialog.findViewById(R.id.editTextNumber)).getText().toString()));
+			//}
 			if(((App)getApplication()).verifyUser(usertemp)==true)
 			{
 				DatabaseHandlerUser dbuser =  new DatabaseHandlerUser(getApplicationContext());
-				Log.i("Hier der Path", dbuser.getPath());
+
 				dbuser.addUser(usertemp);
 				((App)getApplication()).setUser(usertemp);
 				((App)getApplication()).ladeProfile();
 				dialog.dismiss();
+				((App)getApplication()).onCreate();
 
 			}
 			else
 			{
 				Toast.makeText(getApplicationContext(), "Vertification failed\nPlease correct your setting", Toast.LENGTH_LONG).show();
-			}
+				ServerDB.removeUser(((App)getApplication()).normPhoneNumber(((EditText)dialog.findViewById(R.id.editTextNumber)).getText().toString()));
+			} 
+			
+	//		((App)getApplication()).updateRegisteredUsers();
 			
 			 try {
 					((App)getApplication()).backupDatabase();
@@ -165,7 +174,7 @@ public class StartActivity extends Activity
 //        Log.i(TAG, "Stop looping the child thread's message queue");
 //
 //        /*
-//         * Remember to stop the looper
+//         * Rememer to stop the looper
 //         */
 //        ChildThread.mChildHandler.getLooper().quit();
 //

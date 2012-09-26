@@ -78,9 +78,9 @@ public class ChallengeSO extends Activity {
 				
 			}
 
-			private Status getChallengeStatus() {
+			private int getChallengeStatus() {
 				// TODO Auto-generated method stub
-				return null;
+				return 0;
 			}
 
 			private String getProof() {

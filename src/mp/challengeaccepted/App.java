@@ -8,6 +8,8 @@ import java.io.OutputStream;
 import java.net.NoRouteToHostException;
 import java.util.ArrayList;
 
+import mp.challengeaccepted.db.ServerDB;
+
 import com.google.i18n.phonenumbers.NumberParseException;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
 import com.google.i18n.phonenumbers.Phonenumber.PhoneNumber;
@@ -45,17 +47,51 @@ public class App extends Application
 	{
 
 		user = ladeUserProfil();
-		
-		
+//		Log.i("die Zeit", String.valueOf(System.currentTimeMillis()));
 		//Hiermit wird die Profildatenbank geleert!
 //		DatabaseHandlerProfile dbprofile = new DatabaseHandlerProfile(getApplicationContext());
 //		dbprofile.deleteProfile();
 		
 		if((user.isVerified()==true)&&(user.getSim().equals(((TelephonyManager)getSystemService(TELEPHONY_SERVICE)).getSimSerialNumber())))
-		{	
+		{
 			
-			ladeProfile(); //muss an einen Service ausgelagert werden
-			challenges=ladeChallenges(); // muss auch an einen Service ausgelagert werden
+			ladeProfile(); //muss an einen Thread ausgelagert werden 
+			//TODO: areUsers Reparieren!!!!!!!!
+			
+			
+			DatabaseHandlerProfile dbprofile = new DatabaseHandlerProfile(getApplicationContext());
+			ArrayList<Profile> toRegister = ServerDB.areUsers(dbprofile.getAllUnregistered());
+			for(Profile n:toRegister)
+			{
+				Log.i("tel", n.getPhoneNumber());
+				dbprofile.register(n);
+				Log.i("registered", String.valueOf(dbprofile.isRegistered(n)));
+				
+			}
+			
+		
+			Profile testprofil1 = new Profile("4915771356010");
+			Profile testprofil2 = new Profile("4915711111111");
+
+			
+			Challenge testchallenge = new Challenge("Peters Aufgabe", "Schreibe den Challenge-DEscriptionText", testprofil2, testprofil1, "Bilderchen", 1);
+			 
+			DatabaseHandlerChallenge dbchallenge = new DatabaseHandlerChallenge(getApplicationContext());
+			testchallenge.setId(dbchallenge.addChallenge(testchallenge)); //beim erstellen wird gleich die ID mit Ÿbergeben!
+			dbchallenge.addProof("Das ist der Proof", testchallenge);
+			dbchallenge.changeStatus(007, testchallenge);
+			
+			ServerDB.dropTable(user);
+			 
+			 
+			challenges=ladeChallenges(); // muss auch an einen Thread ausgelagert werden
+			
+			 try {
+				 backupDatabase();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 		}
 
 		super.onCreate();
@@ -101,13 +137,21 @@ public class App extends Application
         
         for(Profile n:arg){ 
         		dbp.addProfile(n);
-                }     
+        }     
         
+  //      updateRegisteredUsers();
         
-    }
-    
+        }
     }
 		
+	public void updateRegisteredUsers() {
+		DatabaseHandlerProfile dbp = new DatabaseHandlerProfile (getApplicationContext());
+		
+		ArrayList<Profile> toRegister = ServerDB.profilSync(dbp.getAllUnregistered());
+		
+		dbp.profilSync(toRegister);
+		
+	}
 	
 
 	private User ladeUserProfil() {  
@@ -200,11 +244,11 @@ public class App extends Application
 // funktion um die db auf die sim karte zu schreiben
     public static void backupDatabase() throws IOException {
     //Open your local db as the input stream
-    String inFileName = "/data/data/mp.challengeaccepted/databases/challange";
+    String inFileName = "/data/data/mp.challengeaccepted/databases/challenge";
     File dbFile = new File(inFileName);
     FileInputStream fis = new FileInputStream(dbFile);
 
-    String outFileName = Environment.getExternalStorageDirectory()+"/challenge.sqlite";
+    String outFileName = Environment.getExternalStorageDirectory()+"/challenge2.sqlite";
     //Open the empty db as the output stream
     OutputStream output = new FileOutputStream(outFileName);
     //transfer bytes from the inputfile to the outputfile

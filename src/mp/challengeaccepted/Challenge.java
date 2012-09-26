@@ -8,14 +8,16 @@ public class Challenge
 {
 
 	private int id; 
+	private int serverId;
 	private String title="Title";
 	private String description="Description";
 	private String proof="Proof";
 	private Profile receiver;
 	private Profile sender;
 
+	private String Channel;
 	private boolean channelChallenge;
-	private Status status;
+	private int status;
 	private Date timestamp; 
 	private File file;
 	
@@ -69,11 +71,11 @@ public class Challenge
 		this.channelChallenge = channelChallenge;
 	}
 
-	public Status getStatus() {
+	public int getStatus() {
 		return status;
 	}
 
-	public void setStatus(Status status) {
+	public void setStatus(int status) {
 		this.status = status;
 	}
 
@@ -94,7 +96,31 @@ public class Challenge
 	}
 
 	
-	public Challenge(String title, String description, Profile receiver, Profile sender, String proof, Status status)
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getChannel() {
+		return Channel;
+	}
+
+	public void setChannel(String channel) {
+		Channel = channel;
+	}
+
+	public int getServerId() {
+		return serverId;
+	}
+
+	public void setServerId(int serverId) {
+		this.serverId = serverId;
+	}
+
+	public Challenge(String title, String description, Profile receiver, Profile sender, String proof, int status)
 	{
 		this.title=title;
 		this.description=description;
@@ -120,7 +146,7 @@ public class Challenge
 		{return 4;}
 		if(proof==null)
 		{return 5;}
-		if(status==null)
+		if(status==0) //ist das richtig? TODO
 		{return 6;}
 		if(timestamp==null)
 		{return 7;}
