@@ -71,7 +71,64 @@ if (isset($_POST['tag']) && $_POST['tag'] != '') {
             echo json_encode($response);
             }
 
-   }elseif ($tag == 'profilsync') {
+
+    }elseif ($tag == 'areusers') {
+
+          $anzahlProfile = intval($_POST['anzahlProfile']);
+          $array = array();
+        //  $array = array('name' => 'challenges');
+
+            for($count =0; $count < $anzahlProfile; $count++) {
+                $response["success"] = 0;
+                $response["success"] = 0;
+            $argtelefonnummer = $_POST['arg'.(string)$count]; 
+
+            $array = $db->areUsers($argtelefonnummer, $count, $array);
+
+           //   if ($areusers != false) {
+           //     $response["success"] = 1;
+
+            //    echo json_encode($response);
+            //  } else {
+            //    $response["error"] = 1;
+            //    echo json_encode($response);
+            //  }
+          }
+          echo json_encode($array);
+
+   }elseif ($tag == 'createtable') {
+
+          $telefonnummer = $_POST['telefonnummer'];
+          $create = $db->createTable($telefonnummer);
+          
+            if ($create != false) {
+              $response["success"] = 1;
+              $response["error_msg"] = "table erfolgreich erstellt";
+              echo json_encode($response);
+            } else {
+              $response["error"] = 1;
+              $response["error_msg"] = "Fehler beim erstellen des table";
+              echo json_encode($response);
+            }
+          
+          
+    }elseif ($tag == 'droptable') {
+
+        $telefonnummer = $_POST['telefonnummer'];
+        $drop = $db->dropTable($telefonnummer);
+        
+          if ($drop != false) {
+            $response["success"] = 1;
+            $response["error_msg"] = "table erfolgreich geloescht";
+            echo json_encode($response);
+          } else {
+            $response["error"] = 1;
+            $response["error_msg"] = "Fehler beim loeschen des table";
+            echo json_encode($response);
+          }
+          
+          
+    }elseif ($tag == 'profilsync') {
 
         $anzahlProfile = intval($_POST['anzahlProfile']);
 

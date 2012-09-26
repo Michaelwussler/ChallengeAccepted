@@ -27,9 +27,10 @@ public class DatabaseHandlerProfile extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
     
     // Database Name
-    private static final String DATABASE_NAME = "challange";	 
+    private static final String DATABASE_NAME = "challenge";	 
     private static final String TABLE_PROFILES = "profile";
     private static final String TABLE_USERS = "user";
+    private static final String TABLE_CHALLENGES = "challenges";
 
    
     private static final String KEY_ID = "id";
@@ -40,6 +41,16 @@ public class DatabaseHandlerProfile extends SQLiteOpenHelper {
     private static final String KEY_REGISTERED = "registered";
     private static final String KEY_SIM = "sim";
 
+    private static final String KEY_SERVERID = "serverid";
+    private static final String KEY_TITLE ="title";
+    private static final String KEY_DESCRIPTION = "description";
+    private static final String KEY_PROOF = "proof";
+    private static final String KEY_RECEIVER = "receiver";
+    private static final String KEY_SENDER = "sender";
+    private static final String KEY_CHANNEL = "channelChallenge";
+    private static final String KEY_STATUS = "status";
+    private static final String KEY_TIME = "time";
+    
     //Konstruktor
     public DatabaseHandlerProfile(Context context) {
     	  super(context, DATABASE_NAME, null,DATABASE_VERSION); 
@@ -64,7 +75,17 @@ public class DatabaseHandlerProfile extends SQLiteOpenHelper {
 		  +KEY_VERIFIED+ " TEXT, "
 		  +KEY_REGISTERED+ " TEXT, "
 		  +KEY_SIM+ " TEXT)");
-		  Log.d("CREATE ON TABLE", "BLA");
+		  
+		  db.execSQL("CREATE TABLE "+TABLE_CHALLENGES+" ("+KEY_ID+ " INTEGER PRIMARY KEY , "
+		  +KEY_SERVERID+ " TEXT, " 
+		  +KEY_TITLE+ " TEXT, " 
+		  +KEY_DESCRIPTION+ " TEXT, "
+		  +KEY_PROOF+ " TEXT, "
+		  +KEY_RECEIVER+ " TEXT, "
+		  +KEY_SENDER+ " TEXT, "
+		  +KEY_CHANNEL+ " TEXT, "
+		  +KEY_STATUS+ " TEXT, "
+		  +KEY_TIME+ " TEXT)");		
 		  
 		 }
 
@@ -189,9 +210,12 @@ public class DatabaseHandlerProfile extends SQLiteOpenHelper {
     	}
     	
     	else{
-    		
     		for(int i=0; i< c.getCount(); i++){
-    			
+    			Log.i("String(1)", c.getString(1));
+
+    			Log.i("String(2)", c.getString(2));
+
+        		if(c.getString(2).startsWith("491")){
         		Profile tmpProfile = new Profile();
         		tmpProfile.setId(c.getInt(0));
         		tmpProfile.setName(c.getString(1));
@@ -200,7 +224,14 @@ public class DatabaseHandlerProfile extends SQLiteOpenHelper {
         		tmpProfile.setRegistered(false);
     			tmp.add(tmpProfile);
     			c.moveToNext();
-        	}
+    		}
+    		
+    		else{
+    			Log.i("getUnregistered", "->FEstneztnummer");
+    			c.moveToNext();
+
+    		}
+    		}
     	}
     	c.close();
       	db.close();	
@@ -232,6 +263,7 @@ public class DatabaseHandlerProfile extends SQLiteOpenHelper {
         		Log.d("ServerLOKAL test", "PROFIL SCHON REGISTRIERT");
     			}
     	}
+    	close();
     }
     
     //funktion, die für ein profil ueberprueft, ob es registriert ist anhand der Telefonnummer!!!!

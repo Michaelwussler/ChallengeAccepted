@@ -23,11 +23,12 @@ public class DatabaseHandlerUser extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
     
     // Database Name
-    private static final String DATABASE_NAME = "challange";	 
+    private static final String DATABASE_NAME = "challenge";	 
 
     private static final String TABLE_USERS = "user";
     private static final String TABLE_PROFILES = "profile";
-
+    private static final String TABLE_CHALLENGES = "challenges";
+ 
    
     private static final String KEY_ID = "id";
     private static final String KEY_NAME = "name";
@@ -36,6 +37,16 @@ public class DatabaseHandlerUser extends SQLiteOpenHelper {
     private static final String KEY_VERIFIED = "verified";
     private static final String KEY_REGISTERED = "registered";
     private static final String KEY_SIM = "sim";
+    
+    private static final String KEY_SERVERID = "serverid";
+    private static final String KEY_TITLE ="title";
+    private static final String KEY_DESCRIPTION = "description";
+    private static final String KEY_PROOF = "proof";
+    private static final String KEY_RECEIVER = "receiver";
+    private static final String KEY_SENDER = "sender";
+    private static final String KEY_CHANNEL = "channelChallenge";
+    private static final String KEY_STATUS = "status";
+    private static final String KEY_TIME = "time";
 
     //Konstruktor
     public DatabaseHandlerUser(Context context) {
@@ -54,7 +65,6 @@ public class DatabaseHandlerUser extends SQLiteOpenHelper {
 		  +KEY_VERIFIED+ " TEXT, "
 		  +KEY_REGISTERED+ " TEXT, "
 		  +KEY_SIM+ " TEXT)");
-		  Log.d("CREATE ON TABLE", "BLA");
 		  
 		  db.execSQL("CREATE TABLE "+TABLE_PROFILES+	   
 				    "("+KEY_ID+" INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -62,6 +72,17 @@ public class DatabaseHandlerUser extends SQLiteOpenHelper {
 				  +KEY_TELEFONNUMMER+ " TEXT, "
 				  +KEY_EMAIL+ " TEXT, "
 				  +KEY_REGISTERED+ " TEXT)");
+		  
+		  db.execSQL("CREATE TABLE "+TABLE_CHALLENGES+" ("+KEY_ID+ " INTEGER PRIMARY KEY , "
+		  +KEY_SERVERID+ " TEXT, " 
+		  +KEY_TITLE+ " TEXT, " 
+		  +KEY_DESCRIPTION+ " TEXT, "
+		  +KEY_PROOF+ " TEXT, "
+		  +KEY_RECEIVER+ " TEXT, "
+		  +KEY_SENDER+ " TEXT, "
+		  +KEY_CHANNEL+ " TEXT, "
+		  +KEY_STATUS+ " TEXT, "
+		  +KEY_TIME+ " TEXT)");		
 	}
 
 	 
