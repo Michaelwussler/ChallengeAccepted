@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import mp.challengeaccepted.Profile;
+import mp.challengeaccepted.User;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -22,7 +23,8 @@ import android.util.Log;
 	    private static String isuser_tag = "isuser";
 	    private static String removeuser_tag = "removeuser";
 	    private static String profilsync_tag = "profilsync";
-	    private static String challengesync_tag = "challengesync";
+	    private static String getupdatedchallenges_tag = "getupdatedchallenges";
+	    private static String addproof_tag = "addproof";
 	    private static String challengenew_tag = "challengenew";
 	    private static String areusers_tag = "areusers";
 	    private static String createtable_tag = "createtable";
@@ -101,24 +103,6 @@ import android.util.Log;
 	    }
 	    
 	    /**
-	     * Funktion um einen neue Challenge zu erstellen
-	     * */
-	    public JSONObject erstelleChallenge(String name, String email, String telefonnummer){
-	    	// erstellt einen neues profil in der db und gibt dieses als JSON zurück um es in der localDB zu speichern
-
-	        // Building Parameters
-	        List<NameValuePair> params = new ArrayList<NameValuePair>();
-	        params.add(new BasicNameValuePair("tag", anmelden_tag));
-	        params.add(new BasicNameValuePair("name", name));
-	        params.add(new BasicNameValuePair("email", email));
-	        params.add(new BasicNameValuePair("telefonnummer", telefonnummer));
-
-	        JSONObject json = jsonParser.getJSONFromUrl(URL, params);
-	        // Rückgabe des json Objekts
-	        return json;
-	    }
-	    
-	    /**
 	     * Funktion um ein neues User Table anzulegen
 	     * */
 	    public JSONObject createTable(String telefonnummer){
@@ -147,56 +131,72 @@ import android.util.Log;
 	        return json;
 	    }
 	    
-//	    /**
-//	     * Funktion um die Profile auf der lokalenDB mit denen vom Server zu syncen
-//	     * */
-//	    public ArrayList<Profile> profil_sync(ArrayList<Profile> aktuelleNichtBestaetigteProfile) {
-//	    	//aktuelleNichtBestaetigteProfile enthält die in der lokalendB gespeicherten Profile (oder auf jedenfall alle Telefonnummern, die nicht bei Challange registreit sind )
-//	    
-//	    	ArrayList<Profile> ausgabe = new ArrayList<Profile>();
-//	    	//ausgabe gibt die zusaetzlichen Profile, die noch nicht abgerufen wurden weiter, die die Datenbank 
-//	    	
-//	    	// Building Parameters
-//	    	List<NameValuePair> params = new ArrayList<NameValuePair>();
-//	    	params.add(new BasicNameValuePair("tag", profilsync_tag));
-//        	params.add(new BasicNameValuePair("anzahlProfile", Integer.toString(aktuelleNichtBestaetigteProfile.size())));
-//        
-//        	// Parameter der kartenpunkte übergeben
-//        	
-//        	for(int i=0; i<aktuelleNichtBestaetigteProfile.size(); i++)
-//        	{
-//        		Profile arg = aktuelleNichtBestaetigteProfile.get(i);        		
-//            	params.add(new BasicNameValuePair("profil"+Integer.toString(i), arg.getPhoneNumber()));
-//        	}
-//
-//        	
-//        JSONObject json = jsonParser.getJSONFromUrl(URL, params);
-//        
-//        try {
-//        	 Log.d("Hier?", Integer.toString(123467890));
-//
-//	    		int anzahlProfile = aktuelleNichtBestaetigteProfile.size();
-//	    		
-//				for(int i=0; i<1/*anzahlProfile*/; i++)
-//	        	{
-//					JSONObject json_profilTemp = json.getJSONObject("argprofil"+Integer.toString(i)); //ließt die einzelnen Zeilen aus
-//		        	 Log.d("Hier?", Integer.toString(123467890));
-//					Profile kpTemp = new Profile(json_profilTemp.optString("telefonnummer")); //erstellt einen neuen Profil eintrag
-//					
-//					ausgabe.add(kpTemp);
-//				}
-//								
-//				} catch (JSONException e) {
-//					e.printStackTrace();
-//				}    	
-	    	        
-	        // Rückgabe des json Objekts
-//	        return ausgabe;	    
-//	    }
-	    
-	   
+	    public JSONObject challengeNew(String title, String description, String receiver, String sender, String channel, String status, String time){
+	    	// erstellt einen challenge Table für den Benutzer
 
-	    /**
+	        // Building Parameters
+	        List<NameValuePair> params = new ArrayList<NameValuePair>();
+	        params.add(new BasicNameValuePair("tag", challengenew_tag));
+	        params.add(new BasicNameValuePair("title", title));
+	        params.add(new BasicNameValuePair("description", description));
+	        params.add(new BasicNameValuePair("receiver", receiver));
+	        params.add(new BasicNameValuePair("sender", sender));
+	        params.add(new BasicNameValuePair("channel", channel));
+	        params.add(new BasicNameValuePair("status", status));
+	        params.add(new BasicNameValuePair("time", time));
+	        
+	        
+	        JSONObject json = jsonParser.getJSONFromUrl(URL, params);
+	        // Rückgabe des json Objekts
+	        return json;
+	    }	    
+	    
+//	    public JSONObject challengeSync(Challenge challenge){
+//	    	// erstellt einen challenge Table für den Benutzer
+//
+//	        // Building Parameters
+//	        List<NameValuePair> params = new ArrayList<NameValuePair>();
+//	        params.add(new BasicNameValuePair("tag", challengesync_tag));
+//	        params.add(new BasicNameValuePair("title", title));
+//	        params.add(new BasicNameValuePair("description", description));
+//	        params.add(new BasicNameValuePair("receiver", receiver));
+//	        params.add(new BasicNameValuePair("sender", sender));
+//	        params.add(new BasicNameValuePair("channel", channel));
+//	        params.add(new BasicNameValuePair("status", status));
+//	        params.add(new BasicNameValuePair("time", time));
+//	        
+//	        
+//	        JSONObject json = jsonParser.getJSONFromUrl(URL, params);
+//	        // Rückgabe des json Objekts 
+//	        return json;
+//	    }	    
+	    
+	    public JSONObject addProof(User user, int serverID, String proof){
+
+        // Building Parameters
+        List<NameValuePair> params = new ArrayList<NameValuePair>();
+        params.add(new BasicNameValuePair("tag", addproof_tag));
+        params.add(new BasicNameValuePair("user", user.getPhoneNumber()));
+        params.add(new BasicNameValuePair("id", String.valueOf(serverID)));
+        params.add(new BasicNameValuePair("proof", proof));
+        
+        JSONObject json = jsonParser.getJSONFromUrl(URL, params);
+        // Rückgabe des json Objekts
+        return json;
+	    }	   	   
+	    
+	    public JSONObject getUpdated(String phonenumber){
+
+        // Building Parameters
+        List<NameValuePair> params = new ArrayList<NameValuePair>();
+        params.add(new BasicNameValuePair("tag", getupdatedchallenges_tag));
+        params.add(new BasicNameValuePair("user", phonenumber));
+        
+        JSONObject json = jsonParser.getJSONFromUrl(URL, params);
+        // Rückgabe des json Objekts
+        return json;
+	    }	   	   
+	    /** 
 	     * Hilfsklasse zum Konvertieren von Integer nach Boolean
 	     */
 		public boolean convertIntToBoolean(int intValue)	

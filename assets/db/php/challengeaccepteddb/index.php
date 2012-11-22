@@ -147,7 +147,61 @@ if (isset($_POST['tag']) && $_POST['tag'] != '') {
             }
           }
         
-   }else {
+   }elseif ($tag == 'challengenew') {
+
+        $title = $_POST['title'];
+        $description = $_POST['description'];
+        $receiver = $_POST['receiver'];
+        $sender = $_POST['sender'];
+        $channel = $_POST['channel'];
+        $status = $_POST['status'];
+        $time = $_POST['time'];
+
+    
+        $addchallenge = $db->addChallenge($title, $description, $receiver, $sender, $channel, $status, $time);
+            if ($addchallenge != false) {
+              $response["success"] = 1;
+              $response["error_msg"] = "Challenge erstellt";
+              echo json_encode($response);
+            } else {
+              $response["error"] = 1;
+              $response["error_msg"] = "Fehler beim erstellen der Challenge";
+            echo json_encode($response);
+            }
+        
+   }elseif ($tag == 'addproof') {
+        $user = $_POST['user'];
+        $id = $_POST['id'];
+        $proof = $_POST['proof'];
+
+    
+        $addproof = $db->addProof($user, $id, $proof);
+            if ($addproof != false) {
+              $response["success"] = 1;
+              $response["error_msg"] = "Beweis erbracht";
+              echo json_encode($response);
+            } else {
+              $response["error"] = 1;
+              $response["error_msg"] = "Beweis konnte nicht erbracht werden";
+            echo json_encode($response);
+            }
+        
+   }elseif ($tag == 'getupdatedchallenges') {
+        $user = $_POST['user'];
+    
+        $getupdated = $db->getUpdatedChallenges($user);
+            if ($getupdated != false) {
+              $response["success"] = 1;
+              $response["error_msg"] = "geaenderte challenges geladen";
+              echo json_encode($response);
+            } else {
+              $response["error"] = 1;
+              $response["error_msg"] = "geaenderte challenges konnten nicht geladen werden";
+            echo json_encode($response);
+            }    
+   }
+
+   else {
         echo "Ungueltige Anfrage";
     }
 

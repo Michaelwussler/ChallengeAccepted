@@ -2,7 +2,9 @@ package mp.challengeaccepted.db;
 import java.util.ArrayList;
 
 import mp.challengeaccepted.App;
+import mp.challengeaccepted.Challenge;
 import mp.challengeaccepted.DatabaseHandlerProfile;
+import mp.challengeaccepted.DatabaseHandlerUser;
 import mp.challengeaccepted.Profile;
 import mp.challengeaccepted.User;
 
@@ -173,6 +175,114 @@ public class ServerDB
 	    		e.printStackTrace();
 	    	}
 		}
+	
+	
+	//erstellt eine neue challenge
+	static public Challenge newChallenge(Challenge challenge){
+		
+		DBFunctions databasefunction = new DBFunctions();
+		
+		JSONObject json = databasefunction.challengeNew(challenge.getTitle(), challenge.getDescription(), challenge.getReceiver().getPhoneNumber(), challenge.getSender().getPhoneNumber(), challenge.getChannel(), String.valueOf(1), challenge.getTimestamp().toString());
+		
+			try {
+	            String res = json.getString(KEY_SUCCESS);
+	            if(Integer.parseInt(res) == 1){
+	           	 Log.d("Challenge erfolgreich erstellt", KEY_SUCCESS);
+	           	 if(json.optInt("Challenge")!=0){ 
+	           		 challenge.setServerId(json.optInt("serverid"));
+	        
+	           	 }else{
+	           		challenge.setServerId(-1);
+	           	 }		  
+	            }else{
+	           	 Log.d("Challenge nicht erfolgreich erstellt", KEY_ERROR);
+	            } 
+
+	    	} catch (JSONException e) {
+	    		e.printStackTrace();
+	    	}
+			return challenge;
+	}
+
+
+	//fügt einer challenge den Beweis hinzu
+	static public Challenge addProof(User user, Challenge challenge, String proof){
+		
+		DBFunctions databasefunction = new DBFunctions();
+		
+		JSONObject json = databasefunction.addProof(user, challenge.getServerId(), proof);		
+				
+	      try {
+	            String res = json.getString(KEY_SUCCESS);
+	            if(Integer.parseInt(res) == 1){
+	           	 Log.d("Beweis hinzugefuegt", KEY_SUCCESS);
+	     		 challenge.setProof(proof);
+	            }else{
+	           	 Log.d("Beweis konnte nicht hinzugefuegt werden", KEY_ERROR);
+	     		 challenge.setProof("kein Beweis");
+	            }
+
+	    	} catch (JSONException e) {
+	    		e.printStackTrace();
+	    	}
+	      return challenge;
+		}	
+	
+	//fügt einer challenge den Beweis hinzu
+	static public ArrayList<Challenge> getUpdatedChallenges(User user){
+		
+		
+		DBFunctions databasefunction = new DBFunctions();
+		JSONObject json = databasefunction.getUpdated(user.getPhoneNumber());		
+		ArrayList<Challenge> tmpChallenges = new ArrayList<Challenge>();
+	 
+		try{
+						
+			JSONArray the_json_array = json.getJSONArray("");
+
+			    int size = the_json_array.length();
+			    
+			    ArrayList<JSONObject> arrays = new ArrayList<JSONObject>();
+			    for (int i = 0; i < size; i++) {
+			        JSONObject another_json_object = the_json_array.getJSONObject(i);     
+			        arrays.add(another_json_object);
+			    }
+
+			JSONObject[] jsons = new JSONObject[arrays.size()];
+			arrays.toArray(jsons);
+
+			
+//				int reihen = json.optInt("anzahlReihen");
+//				JSONArray json2=json.getJSONArray("result2");
+//
+//				if(reihen!=0){
+//					for(int i=1; i<=reihen; i++){ 
+						
+						
+//						
+//			           	 String serverid = json2.getJSONObject(i).getString("serverid");
+//			           			 //getJSONObject("laden"+String.valueOf(i)); 
+//			           	 String title = json.getJSONObject("laden"+String.valueOf(i)).getString("title");
+//			           	 String description = json.getJSONObject("laden"+String.valueOf(i)).getString("description");
+//			           	 String receiver = json.getJSONObject("laden"+String.valueOf(i)).getString("receiver");
+//			           	 String sender = json.getJSONObject("laden"+String.valueOf(i)).getString("sender");
+//			           	 String status = json.getJSONObject("laden"+String.valueOf(i)).getString("status");
+//			           	 String proof = json.getJSONObject("laden"+String.valueOf(i)).getString("proof");
+//			           	 Log.i("schauen", serverid + "," + title + "," + description+ "," + receiver+ "," + sender+ "," + status+ "," + proof);
+//			           	// Log.i("schauen", serverid);
+//						
+////			           	 tmpChallenges.add(new Challenge(serverid, title, description, receiver, sender, proof, status));
+//		           	 } 
+//				}
+//				else{Log.d("keine Challenges zum updaten gefunden", "alle uptodate"); 
+//				}
+	    	} catch (JSONException e) {
+	    		e.printStackTrace();
+	    	}
+	//	Challenge.log_print(tmpChallenges.get(0));
+		
+		return tmpChallenges; 
+	}
 	
 	//JSONARRAY to ArrayList converter
 	static public ArrayList<String> convert(JSONArray input) throws JSONException{

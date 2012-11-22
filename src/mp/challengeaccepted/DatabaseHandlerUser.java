@@ -47,6 +47,7 @@ public class DatabaseHandlerUser extends SQLiteOpenHelper {
     private static final String KEY_CHANNEL = "channelChallenge";
     private static final String KEY_STATUS = "status";
     private static final String KEY_TIME = "time";
+    private static final String KEY_UPTODATE = "uptodate";
 
     //Konstruktor
     public DatabaseHandlerUser(Context context) {
@@ -82,7 +83,9 @@ public class DatabaseHandlerUser extends SQLiteOpenHelper {
 		  +KEY_SENDER+ " TEXT, "
 		  +KEY_CHANNEL+ " TEXT, "
 		  +KEY_STATUS+ " TEXT, "
-		  +KEY_TIME+ " TEXT)");		
+		  +KEY_TIME+ " TEXT, "
+		  +KEY_UPTODATE+ " TEXT)");		  
+
 	}
 
 	 

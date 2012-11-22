@@ -2,6 +2,8 @@ package mp.challengeaccepted;
 import java.io.File;
 import java.util.Date;
 
+import android.util.Log;
+
 
 
 public class Challenge 
@@ -15,7 +17,7 @@ public class Challenge
 	private Profile receiver;
 	private Profile sender;
 	private int status;
-	private String Channel;
+	private String channel;
 	private Date timestamp; 
 	private File file;
 	
@@ -102,11 +104,11 @@ public class Challenge
 	}
 
 	public String getChannel() {
-		return Channel;
+		return channel;
 	}
 
 	public void setChannel(String channel) {
-		Channel = channel;
+		this.channel = channel;
 	}
 
 	public int getServerId() {
@@ -125,7 +127,22 @@ public class Challenge
 		this.sender=sender;
 		this.proof=proof;
 		this.status=status;
+		this.timestamp= new Date(System.currentTimeMillis());
+		this.channel = "empty";
 	}
+	
+	public Challenge(String serverid, String title, String description, String receiver, String sender, String proof, String status)
+	{
+		this.serverId=Integer.valueOf(serverid);
+		this.title=title;
+		this.description=description;
+		this.receiver.setPhoneNumber(receiver);
+		this.sender.setPhoneNumber(sender);
+		this.proof=proof;
+		this.status=Integer.valueOf(status);
+		this.channel = "empty";
+	}
+	
 	
 	public Challenge() {
 		// TODO Auto-generated constructor stub
@@ -151,4 +168,18 @@ public class Challenge
 		{return 8;}
 		return 0;
 	}
+
+	static public void log_print(Challenge challenge){
+		
+		Log.i("ServerID", String.valueOf(challenge.getServerId()));
+		Log.i("title", challenge.getTitle());
+		Log.i("description", challenge.getDescription());
+		Log.i("receiver", challenge.getReceiver().getPhoneNumber());
+		Log.i("sender", challenge.getSender().getPhoneNumber());
+		Log.i("proof", challenge.getProof());
+		Log.i("status", String.valueOf(challenge.getStatus()));
+		Log.i("channel", challenge.getChannel());
+
+	}
+	
 }

@@ -53,6 +53,7 @@ public class DatabaseHandlerChallenge extends SQLiteOpenHelper {
     private static final String KEY_CHANNEL = "channelChallenge";
     private static final String KEY_STATUS = "status";
     private static final String KEY_TIME = "time";
+    private static final String KEY_UPTODATE = "uptodate";
 
 
     //Konstruktor
@@ -89,7 +90,8 @@ public class DatabaseHandlerChallenge extends SQLiteOpenHelper {
 		  +KEY_SENDER+ " TEXT, "
 		  +KEY_CHANNEL+ " TEXT, "
 		  +KEY_STATUS+ " TEXT, "
-		  +KEY_TIME+ " TEXT)");		  
+		  +KEY_TIME+ " TEXT, "
+		  +KEY_UPTODATE+ " TEXT)");		  
 		 }
 
 	 
@@ -104,13 +106,14 @@ public class DatabaseHandlerChallenge extends SQLiteOpenHelper {
 	 /**
      * All CRUD(Create, Read, Update, Delete) Operations
      */
-  //Neues Profil erstellen
+  //Neues CHallenge erstellen erstellen
     public int addChallenge(Challenge challenge) { //gibt als Wert die zugewiesen ID zurück
     	int arg =0;
         if(!(exist(challenge))){
         	
             SQLiteDatabase db = this.getWritableDatabase();
         	ContentValues values = new ContentValues();
+	        values.put(KEY_SERVERID, String.valueOf(0)); 
 	        values.put(KEY_TITLE, challenge.getTitle()); 
 	        values.put(KEY_DESCRIPTION, challenge.getDescription()); 
 	        values.put(KEY_PROOF,  challenge.getProof()); 
@@ -119,6 +122,8 @@ public class DatabaseHandlerChallenge extends SQLiteOpenHelper {
 	        values.put(KEY_CHANNEL,  challenge.getChannel()); 
 	        values.put(KEY_STATUS,  String.valueOf(challenge.getStatus())); 
 	        values.put(KEY_TIME,  String.valueOf(System.currentTimeMillis())); 	   //TODO welche Zeit hier?      
+	        values.put(KEY_UPTODATE,  String.valueOf(0)); 	   //TODO welche Zeit hier?     
+	       
 	        // Reihe in Tabelle eintragen
 	        db.insert(TABLE_CHALLENGES, KEY_TITLE, values);
 	        
@@ -137,22 +142,7 @@ public class DatabaseHandlerChallenge extends SQLiteOpenHelper {
         return arg;
     }
 	
-    //Neues Profil erstellen
-    public void addProof(String proof, Challenge challenge) {
- 
-        if(exist(challenge)){
-        	
-            SQLiteDatabase db = this.getWritableDatabase();
-        	ContentValues values = new ContentValues();
-	        values.put(KEY_PROOF,  proof); 
-	       
-	        db.update(TABLE_CHALLENGES, values, KEY_ID + "=?", new String[] { String.valueOf(challenge.getId()) });
-	        db.close(); // database Verbindung schliessen
-        }
-        else{
-        	Log.i("addProof", "challenge existiert nicht!");
-        }
-    }
+
     
     //Neues Profil erstellen
     public void changeStatus(int status, Challenge challenge) {
@@ -162,7 +152,6 @@ public class DatabaseHandlerChallenge extends SQLiteOpenHelper {
             SQLiteDatabase db = this.getWritableDatabase();
         	ContentValues values = new ContentValues();
 	        values.put(KEY_STATUS,  String.valueOf(status)); 
-	       
 	        db.update(TABLE_CHALLENGES, values, KEY_ID + "=?", new String[] { String.valueOf(challenge.getId()) });
 	        db.close(); // database Verbindung schliessen
         }
@@ -171,8 +160,40 @@ public class DatabaseHandlerChallenge extends SQLiteOpenHelper {
         }
     }
     
+    public void setUptodate(int uptodate, int id) {
+ 
+        if(exist(id)){
+        	
+            SQLiteDatabase db = this.getWritableDatabase();
+        	ContentValues values = new ContentValues();
+	        values.put(KEY_UPTODATE,  String.valueOf(uptodate)); 
+	       
+	        db.update(TABLE_CHALLENGES, values, KEY_ID + "=?", new String[] { String.valueOf(id) });
+	        db.close(); // database Verbindung schliessen
+        }
+        else{
+        	Log.i("addProof", "challenge existiert nicht!");
+        }
+    }
+    
+    public void setServerID(int serverID, int id) {
+    	 
+        if(exist(id)){
+        	
+            SQLiteDatabase db = this.getWritableDatabase();
+        	ContentValues values = new ContentValues();
+	        values.put(KEY_SERVERID,  String.valueOf(serverID)); 
+	       
+	        db.update(TABLE_CHALLENGES, values, KEY_ID + "=?", new String[] { String.valueOf(id) });
+	        db.close(); // database Verbindung schliessen
+        }
+        else{
+        	Log.i("addProof", "challenge existiert nicht!");
+        }
+    }
+    
   //Challenges loeschen
-    public int deleteChallenge()
+    public int deleteChallenges()
     {
      SQLiteDatabase db=this.getWritableDatabase();
      int tmp = db.delete(TABLE_CHALLENGES, null, null);
@@ -199,6 +220,39 @@ public class DatabaseHandlerChallenge extends SQLiteOpenHelper {
     	return var;
     }
     
+    //überprüft ob es dazu einen eintrag in der DB gibt (um doppelbelegungen zu verhindern)
+    public boolean exist(int id){
+
+    	boolean var = false;
+    	SQLiteDatabase db = this.getWritableDatabase();
+    	Cursor c = db.query(TABLE_CHALLENGES,new String[] { KEY_ID, KEY_SERVERID, KEY_TITLE, KEY_DESCRIPTION, KEY_PROOF, KEY_RECEIVER, KEY_SENDER, KEY_CHANNEL, KEY_STATUS, KEY_TIME}, KEY_ID + "=?",
+                new String[] { String.valueOf(id) }, null, null, null, null);
+    	c.moveToFirst();		
+    	if(c.getCount()!=0){
+	      	if(c.getString(0).equalsIgnoreCase(String.valueOf(id))){	
+	      		 var =true;
+	     	}
+    	}
+      	db.close();
+    	return var;
+    }
+    
+    //überprüft ob es dazu einen eintrag in der DB gibt (um doppelbelegungen zu verhindern)
+    public boolean exist_server(int serverid){
+
+    	boolean var = false;
+    	SQLiteDatabase db = this.getWritableDatabase();
+    	Cursor c = db.query(TABLE_CHALLENGES,new String[] { KEY_ID, KEY_SERVERID, KEY_TITLE, KEY_DESCRIPTION, KEY_PROOF, KEY_RECEIVER, KEY_SENDER, KEY_CHANNEL, KEY_STATUS, KEY_TIME}, KEY_ID + "=?",
+                new String[] { String.valueOf(serverid) }, null, null, null, null);
+    	c.moveToFirst();		
+    	if(c.getCount()!=0){
+	      	if(c.getString(1).equalsIgnoreCase(String.valueOf(serverid))){	
+	      		 var =true;
+	     	}
+    	}
+      	db.close();
+    	return var;
+    }
     
   //gibt alle Profile aus, die einen account haben
     public ArrayList<Challenge> getAllChallenges(){

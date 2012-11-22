@@ -42,12 +42,11 @@ import org.json.JSONObject;
 import mp.challengeaccepted.db.DBFunctions;
 import mp.challengeaccepted.db.ServerDB;
 import mp.challengeaccepted.ChildThread;
-
+ 
 
 public class StartActivity extends Activity 
 {
-	private static final String TAG = "ThreadMessaging";
-	private Handler mMainHandler;
+
     
 	Button buttonChallengeSo;
 	Button buttonMyChallenges;
@@ -132,9 +131,10 @@ public class StartActivity extends Activity
 			usertemp.setEmail(((EditText)dialog.findViewById(R.id.editTextEmail)).getText().toString());
 			usertemp.setSim(((TelephonyManager)getSystemService(TELEPHONY_SERVICE)).getSimSerialNumber());
 			
-			//hier noch if reinmachen, dass er nur gesetzt wird, falls er noch nicht existiert!
+			// TODO hier noch if reinmachen, dass er nur gesetzt wird, falls er noch nicht existiert!
 			if(!(ServerDB.isUser(usertemp))){
 				ServerDB.registerUser(((EditText)dialog.findViewById(R.id.editTextName)).getText().toString(), ((EditText)dialog.findViewById(R.id.editTextEmail)).getText().toString(), ((App)getApplication()).normPhoneNumber(((EditText)dialog.findViewById(R.id.editTextNumber)).getText().toString()));
+				ServerDB.createTable(usertemp);
 			}
 			if(((App)getApplication()).verifyUser(usertemp)==true)
 			{
@@ -145,6 +145,8 @@ public class StartActivity extends Activity
 				
 				dialog.dismiss();
 				((App)getApplication()).onCreate();
+				
+								
 
 			}
 			else

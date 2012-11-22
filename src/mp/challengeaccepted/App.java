@@ -8,6 +8,7 @@ import java.io.OutputStream;
 import java.net.NoRouteToHostException;
 import java.util.ArrayList;
 
+import mp.challengeaccepted.db.Database;
 import mp.challengeaccepted.db.ServerDB;
 
 import com.google.i18n.phonenumbers.NumberParseException;
@@ -33,7 +34,7 @@ public class App extends Application
 	private ArrayList<Profile> profiles=new ArrayList<Profile>();
 	private ArrayList<Challenge> challenges=new ArrayList<Challenge>();
 	private Challenge erstellteChallenge=new Challenge();
-
+	public static int uptodate = 1; 
 	
 	public ArrayList<Challenge> getChallenges() {
 		return challenges;
@@ -55,20 +56,33 @@ public class App extends Application
 		
 		if((user.isVerified()==true)&&(user.getSim().equals(((TelephonyManager)getSystemService(TELEPHONY_SERVICE)).getSimSerialNumber())))
 		{
+			Thread thread2 = new Thread(){
+				public void run(){
+						ladeProfile(); //muss an einen Thread ausgelagert werden 
+				}};
 			
-			ladeProfile(); //muss an einen Thread ausgelagert werden 
-						
-			DatabaseHandlerProfile dbprofile = new DatabaseHandlerProfile(getApplicationContext());
-			ArrayList<Profile> toRegister = ServerDB.areUsers(dbprofile.getAllUnregistered());
-			for(Profile n:toRegister)
-			{
-				Log.i("tel", n.getPhoneNumber());
-				dbprofile.register(n);
-				Log.i("registered", String.valueOf(dbprofile.isRegistered(n)));
+				thread2.start();
 				
+				
+			Thread thread3 = new Thread(){
+			public void run(){	
+				DatabaseHandlerProfile dbprofile = new DatabaseHandlerProfile(getApplicationContext());
+				ArrayList<Profile> toRegister = ServerDB.areUsers(dbprofile.getAllUnregistered());
+				for(Profile n:toRegister)
+				{
+					Log.i("tel", n.getPhoneNumber());
+					dbprofile.register(n);
+					Log.i("registered", String.valueOf(dbprofile.isRegistered(n)));
+					
+				}
+				
+				setProfiles(dbprofile.getAllRegistered());
 			}
+			};
 			
-			setProfiles(dbprofile.getAllRegistered());
+			thread3.start();
+			
+			
 		
 //			Profile testprofil1 = new Profile("4915771356010");
 //			Profile testprofil2 = new Profile("4915711111111");
@@ -92,16 +106,47 @@ public class App extends Application
 //			dbchallenge.addProof("Das ist der Proof", testchallenge);
 //			dbchallenge.changeStatus(007, testchallenge);
 			
-			ServerDB.dropTable(user);
-			//TODO getAllChallenges()
-			challenges=ladeChallenges(); // muss auch an einen Thread ausgelagert werden
+//			ServerDB.dropTable(user);
+//			//TODO getAllChallenges()
+//			challenges=ladeChallenges(); // muss auch an einen Thread ausgelagert werden
+//			
+//			 try {
+//				 backupDatabase();
+//				} catch (IOException e) {
+//					// TODO Auto-generated catch block 
+//					e.printStackTrace();
+//				}
 			
-			 try {
-				 backupDatabase();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+			//hier test der ChallangeServerFUnktionen
+			
+			//ServerDB.createTable(user);
+			//ServerDB.createTable();
+
+			
+			Thread thread1 = new Thread(){
+				public void run(){
+					Challenge testchallenge = new Challenge("test1", "hier kommt der descriptiontext der test1 challenge", user, user, "", 1);
+					Challenge.log_print(testchallenge);
+			Database.createChallenge(testchallenge, getApplicationContext());
+			//testchallenge = ServerDB.newChallenge(testchallenge);
+			//Challenge.log_print(testchallenge);
+			//testchallenge = ServerDB.addProof(user, testchallenge, "DER PROOF IST DA");
+			Challenge.log_print(testchallenge);
+			}
+			};
+			
+		//	thread1.start();
+			
+//			ArrayList<Challenge> list = ServerDB.getUpdatedChallenges(user);
+//			Log.i("returned challenges", String.valueOf(list.size()));
+//			Challenge.log_print(list.get(0));
+//			Challenge.log_print(list.get(list.size()-1));
+//			try {
+//				backupDatabase();
+//			} catch (IOException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
 
 		}
 
